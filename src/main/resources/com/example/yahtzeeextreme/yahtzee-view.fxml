@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.yahtzeeextreme.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+    <TableView fx:id="yahtzeeTableView">
+        <columns>
+            <TableColumn text="Category">
+                <cellValueFactory>
+                    <PropertyValueFactory property="category"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Player 1">
+                <cellValueFactory>
+                    <PropertyValueFactory property="score1"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Player 2">
+                <cellValueFactory>
+                    <PropertyValueFactory property="score2"/>
+                </cellValueFactory>
+            </TableColumn>
+
+        </columns>
+
+
+    </TableView>
+
+    <Label fx:id="demo"/>
+    <Button text="Roll Dices" onAction="#onButtonClick"/>
+</VBox>
