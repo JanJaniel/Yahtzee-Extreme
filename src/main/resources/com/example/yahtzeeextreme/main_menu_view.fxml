@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="277.0" prefWidth="315.0" spacing="20.0" styleClass="vbox" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx" fx:controller="com.example.yahtzeeextreme.YahtzeeController"  stylesheets="@styles.css">
+
+   <Label  text="Yahtzee Extreme" styleClass="welcome"/>
+
+    <Button fx:id="playButton" onAction="#switchToGame"  text="Let's Play!" styleClass="play" />
+
+</VBox>

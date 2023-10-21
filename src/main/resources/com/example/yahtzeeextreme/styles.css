@@ -1,0 +1,15 @@
+.vbox {
+    -fx-background-color: #252222;
+    -fx-pref-width: 500px;
+    -fx-pref-height: 400px;
+}
+
+.welcome{
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+}
+
+.button {
+    -fx-text-fill: white;
+    -fx-background-color: grey;
+}
