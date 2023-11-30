@@ -5,8 +5,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="322.0" prefWidth="386.0" styleClass="vbox" stylesheets="@styles.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.yahtzeeextreme.YahtzeeController">
+<AnchorPane prefHeight="322.0" prefWidth="386.0" styleClass="vbox" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.YahtzeeController">
 
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -14,12 +16,39 @@
 
 
     <children>
-        <Label layoutX="243.0" layoutY="54.0" text="This is the Game" />
-        <Button layoutX="260.0" layoutY="451.0" mnemonicParsing="false" onAction="#switchToMainMenu" text="End Game" />
+
+        <HBox layoutX="245.0" layoutY="65.0" prefHeight="25.0" prefWidth="77.0" spacing="10.0" styleClass="dice-hbox">
+            <Label fx:id="dice1Label" styleClass="label-in-hbox" text="">
+            <font>
+               <Font size="24.0" />
+            </font></Label>
+            <Label fx:id="dice2Label" styleClass="label-in-hbox" text="">
+            <font>
+               <Font size="24.0" />
+            </font></Label>
+            <Label fx:id="dice3Label" styleClass="label-in-hbox" text="">
+            <font>
+               <Font size="24.0" />
+            </font></Label>
+            <Label fx:id="dice4Label" styleClass="label-in-hbox" text="">
+            <font>
+               <Font size="24.0" />
+            </font></Label>
+            <Label fx:id="dice5Label" styleClass="label-in-hbox" text="">
+            <font>
+               <Font size="24.0" />
+            </font></Label>
+        </HBox>
+
+
+
+
+        <Button layoutX="22.0" layoutY="19.0" mnemonicParsing="false" onAction="#switchToMainMenu" text="End Game" />
 
         <!-- TableView -->
         <TableView layoutX="42.0" layoutY="118.0" prefHeight="300.0" prefWidth="510.0">
             <!-- Define TableColumns here -->
         </TableView>
+         <Button layoutX="42.0" layoutY="457.0" text="roll dices" onAction="#rollDice" />
     </children>
 </AnchorPane>

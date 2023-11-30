@@ -5,15 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="911e3cff-2344-42e8-9e02-a1900593d226" name="Changes" comment="basic start">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/YahtzeeApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/YahtzeeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/main_menu_view.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/yahtzee_game_view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/Dice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/YahtzeeDices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/HelloApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/HelloController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/yahtzee-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/RowData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/YahtzeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/YahtzeeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/yahtzee_game_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/yahtzee_game_view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +27,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -45,25 +44,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/User/Desktop/Github Projects/libraries/javafx-sdk-21/lib",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.JavaFX",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Desktop/Github Projects/libraries/javafx-sdk-21/lib&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\User\Desktop\Github Projects\Yahtzee-extreme\src\main\resources\com\example\yahtzeeextreme\images" />
@@ -97,7 +96,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1697706705320</updated>
-      <workItem from="1697706706912" duration="43114000" />
+      <workItem from="1697706706912" duration="44247000" />
+      <workItem from="1700105454056" duration="28000" />
+      <workItem from="1701343209847" duration="4724000" />
     </task>
     <task id="LOCAL-00001" summary="basic start">
       <created>1697709270627</created>
@@ -141,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697802903320</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="basic start">
+      <created>1697899268222</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1697899268222</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

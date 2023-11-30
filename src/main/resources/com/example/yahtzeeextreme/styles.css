@@ -13,3 +13,12 @@
     -fx-text-fill: white;
     -fx-background-color: grey;
 }
+
+.label-in-hbox {
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+/*.dice-hbox {*/
+/*    -fx-alignment: center;*/
+/*}*/

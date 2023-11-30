@@ -15,6 +15,9 @@ import java.io.IOException;
 public class YahtzeeController {
 
 
+    /*
+    Scene changing logic
+     */
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -34,6 +37,44 @@ public class YahtzeeController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+
+
+    /*
+    --Dice logic--
+     */
+    @FXML
+    private Label dice1Label;
+    @FXML
+    private Label dice2Label;
+    @FXML
+    private Label dice3Label;
+    @FXML
+    private Label dice4Label;
+    @FXML
+    private Label dice5Label;
+
+    private YahtzeeDices yahtzeeDices = new YahtzeeDices();
+
+
+    @FXML
+    protected void rollDice(ActionEvent event) {
+        yahtzeeDices.rollAllDices();
+        updateDiceLabels();
+    }
+
+    private void updateDiceLabels() {
+        Dice[] dices = yahtzeeDices.getDices();
+
+        //updating each dice with new value
+        dice1Label.setText(String.valueOf(dices[0].getValue()));
+        dice2Label.setText(String.valueOf(dices[1].getValue()));
+        dice3Label.setText(String.valueOf(dices[2].getValue()));
+        dice4Label.setText(String.valueOf(dices[3].getValue()));
+        dice5Label.setText(String.valueOf(dices[4].getValue()));
+
+
     }
 
 }
