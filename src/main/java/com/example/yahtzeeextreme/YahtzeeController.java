@@ -111,7 +111,7 @@ public class YahtzeeController {
 
     private boolean isButtonToggled(Button button) {
         String currentStyle = button.getStyle();
-        return currentStyle.contains("-fx-background-color: #1aff00");
+        return currentStyle.contains("-fx-background-color: #22561b");
     }
 
     //when clicked/selected the dice will turn green to help the user understand which dices will not change when clicking roll dices button
@@ -119,7 +119,7 @@ public class YahtzeeController {
         if (isButtonToggled(button)) {
             button.setStyle(""); // Set to default style (remove inline styles)
         } else {
-            button.setStyle("-fx-background-color: #1aff00; -fx-text-fill: white;");
+            button.setStyle("-fx-background-color: #22561b; -fx-text-fill: white;");
         }
     }
 }

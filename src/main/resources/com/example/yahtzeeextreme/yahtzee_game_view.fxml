@@ -7,11 +7,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="322.0" prefWidth="386.0" styleClass="vbox" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.YahtzeeController">
+<AnchorPane prefHeight="322.0" prefWidth="386.0" styleClass="anchorPane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.YahtzeeController">
 
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
+
 
 
     <children>
@@ -42,12 +43,12 @@
 
 
 
-        <Button layoutX="22.0" layoutY="19.0" mnemonicParsing="false" onAction="#switchToMainMenu" text="End Game" />
+        <Button layoutX="42.0" layoutY="516.0" mnemonicParsing="false" onAction="#switchToMainMenu" styleClass="endGame" text="End Game" />
 
         <!-- TableView -->
-        <TableView layoutX="42.0" layoutY="118.0" prefHeight="300.0" prefWidth="510.0">
+        <TableView styleClass="table" layoutX="42.0" layoutY="118.0" prefHeight="300.0" prefWidth="510.0">
             <!-- Define TableColumns here -->
         </TableView>
-         <Button layoutX="42.0" layoutY="457.0" onAction="#rollDice" text="roll dices" />
+         <Button layoutX="254.0" layoutY="456.0" onAction="#rollDice" prefHeight="85.0" prefWidth="85.0" styleClass="roll" text="roll dices" />
     </children>
 </AnchorPane>

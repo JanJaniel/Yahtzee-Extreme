@@ -4,29 +4,66 @@
     -fx-pref-height: 400px;
 }
 
-.welcome{
+.anchorPane {
+    -fx-background-color: #252222;
+    -fx-pref-width: 500px;
+    -fx-pref-height: 400px;
+}
+
+.welcome {
     -fx-text-fill: white;
     -fx-font-size: 24px;
 }
 
 
-
-/*.button-in-hbox {*/
-/*    -fx-text-fill: white;*/
-/*    -fx-alignment: center;*/
-/*}*/
-
-/* styles.css */
+.table-view{
+    -fx-background-color: #545b52;
+}
 
 /*Dices*/
+
 .dice-hbox .button-in-hbox {
     -fx-font-size: 24.0;
-    -fx-background-color: #FFFFFF; /* Default background color */
-    -fx-text-fill: black; /* Default text color */
-
+    -fx-background-color: #545b52;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
 }
 
 .dice-hbox .button-in-hbox:hover {
-    -fx-background-color: #1aff00; /* Red background on hover */
+    -fx-background-color: #035c99; /* green background on hover */
     -fx-text-fill: white; /* White text on hover */
+}
+
+.roll {
+    -fx-background-radius: 50em;
+    -fx-background-color: #545b52;
+    -fx-text-fill: white;
+}
+
+.roll:hover {
+    -fx-background-color: #035c99; /* Green background on hover */
+    -fx-text-fill: white; /* White text on hover */
+}
+
+.endGame {
+    -fx-background-color: #545b52;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+}
+
+.endGame:hover {
+    -fx-background-color: #531414; /* Green background on hover */
+    -fx-text-fill: white; /* White text on hover */
+}
+
+.play{
+    -fx-font-size: 18px; /* Increase font size */
+    -fx-background-color: #545b52;
+    -fx-background-radius: 10;
+
+}
+
+.play:hover{
+    -fx-background-color: #4b3b54;
+    -fx-text-fill: white;
 }
