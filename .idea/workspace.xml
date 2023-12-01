@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="911e3cff-2344-42e8-9e02-a1900593d226" name="Changes" comment="basic start">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/Dice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/YahtzeeDices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="911e3cff-2344-42e8-9e02-a1900593d226" name="Changes" comment="first dice logic implemented">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/RowData.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/YahtzeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/YahtzeeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/yahtzee_game_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/yahtzee_game_view.fxml" afterDir="false" />
@@ -98,7 +94,7 @@
       <updated>1697706705320</updated>
       <workItem from="1697706706912" duration="44247000" />
       <workItem from="1700105454056" duration="28000" />
-      <workItem from="1701343209847" duration="4724000" />
+      <workItem from="1701343209847" duration="9894000" />
     </task>
     <task id="LOCAL-00001" summary="basic start">
       <created>1697709270627</created>
@@ -149,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697899268222</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="first dice logic implemented">
+      <created>1701348319691</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1701348319691</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -157,7 +160,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="basic start" />
-    <option name="LAST_COMMIT_MESSAGE" value="basic start" />
+    <MESSAGE value="first dice logic implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="first dice logic implemented" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
