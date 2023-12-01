@@ -9,16 +9,24 @@
     -fx-font-size: 24px;
 }
 
-.button {
-    -fx-text-fill: white;
-    -fx-background-color: grey;
-}
 
-.label-in-hbox {
-    -fx-text-fill: white;
-    -fx-alignment: center;
-}
 
-/*.dice-hbox {*/
+/*.button-in-hbox {*/
+/*    -fx-text-fill: white;*/
 /*    -fx-alignment: center;*/
 /*}*/
+
+/* styles.css */
+
+/*Dices*/
+.dice-hbox .button-in-hbox {
+    -fx-font-size: 24.0;
+    -fx-background-color: #FFFFFF; /* Default background color */
+    -fx-text-fill: black; /* Default text color */
+
+}
+
+.dice-hbox .button-in-hbox:hover {
+    -fx-background-color: #1aff00; /* Red background on hover */
+    -fx-text-fill: white; /* White text on hover */
+}
