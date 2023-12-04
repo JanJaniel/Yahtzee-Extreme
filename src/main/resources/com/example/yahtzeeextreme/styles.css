@@ -5,7 +5,7 @@
 }
 
 .anchorPane {
-    -fx-background-color: #252222;
+    -fx-background-color: #272121;
     -fx-pref-width: 500px;
     -fx-pref-height: 400px;
 }
@@ -14,7 +14,6 @@
     -fx-text-fill: white;
     -fx-font-size: 24px;
 }
-
 
 .table-view{
     -fx-background-color: #545b52;
@@ -66,4 +65,9 @@
 .play:hover{
     -fx-background-color: #4b3b54;
     -fx-text-fill: white;
+}
+
+.table-view .column-header {
+    -fx-background-color: #787171;
+
 }

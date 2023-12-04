@@ -1,5 +1,8 @@
 package com.example.yahtzeeextreme;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -7,9 +10,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
-
 import java.io.IOException;
 
 public class YahtzeeController {
@@ -38,11 +41,9 @@ public class YahtzeeController {
         stage.show();
     }
 
-
     /*
     --Dice logic--
      */
-
     private YahtzeeDices yahtzeeDices = new YahtzeeDices();
 
     @FXML
@@ -122,29 +123,22 @@ public class YahtzeeController {
             button.setStyle("-fx-background-color: #22561b; -fx-text-fill: white;");
         }
     }
+
+    /*
+    Tableview stuff
+    */
+
+    @FXML
+    private TableView<?> gameTable;
+
+    @FXML TableColumn<?,?> Category;
+    @FXML TableColumn<?,?> Player1;
+    @FXML TableColumn<?,?> Player2;
+
+
+
+//    public static class Player {
+//        private final SimpleStringProperty
+//    }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
