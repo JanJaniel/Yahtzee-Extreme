@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -19,7 +20,8 @@ public class YahtzeeApplication extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("main_menu_view.fxml"));
             Scene mainMenuScene = new Scene(root);
             mainMenuScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
-            stage.getIcons().add(new Image("/com/example/yahtzeeextreme/images/icon_top_left.jpg"));
+            //stage.getIcons().add(new Image("/com/example/yahtzeeextreme/images/icon_top_left.jpg"));
+            stage.initStyle(StageStyle.UTILITY);
             stage.setTitle("Yahtzee Extreme");
             stage.setScene(mainMenuScene);
             stage.show();

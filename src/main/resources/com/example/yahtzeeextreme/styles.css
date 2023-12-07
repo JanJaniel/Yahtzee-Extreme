@@ -1,8 +1,4 @@
-.vbox {
-    -fx-background-color: #252222;
-    -fx-pref-width: 500px;
-    -fx-pref-height: 400px;
-}
+
 
 .anchorPane {
     -fx-background-color: #272121;
@@ -13,10 +9,13 @@
 .welcome {
     -fx-text-fill: white;
     -fx-font-size: 24px;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
 }
 
 .table-view{
     -fx-background-color: #545b52;
+    -fx-background-radius: 5;
 }
 
 /*Dices*/
@@ -69,5 +68,6 @@
 
 .table-view .column-header {
     -fx-background-color: #787171;
+
 
 }
