@@ -49,9 +49,9 @@
         <!-- TableView -->
         <TableView fx:id="gameTable" layoutX="100.0" layoutY="126.0" prefHeight="300.0" prefWidth="295.0" styleClass="table">
          <columns>
-            <TableColumn fx:id="category" prefWidth="95.0" text="Categegory" />
-            <TableColumn fx:id="score" prefWidth="100.0" text="Player 1" />
-             <TableColumn fx:id="score2" prefWidth="100.0" text="Player 2" />
+            <TableColumn fx:id="categoryColumn" prefWidth="95.0" text="Categegory" />
+            <TableColumn fx:id="scoreColumn" prefWidth="100.0" text="Player 1" />
+             <TableColumn fx:id="score2Column" prefWidth="100.0" text="Player 2" />
 
          </columns></TableView>
          <Button layoutX="208.0" layoutY="456.0" onAction="#rollDice" prefHeight="85.0" prefWidth="85.0" styleClass="roll" text="roll dices" />

@@ -1,5 +1,7 @@
 package com.example.yahtzeeextreme;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -8,7 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
+
+import javax.security.auth.Destroyable;
 import java.io.IOException;
+import java.util.List;
 
 public class YahtzeeController {
 
@@ -29,6 +34,7 @@ public class YahtzeeController {
     }
     @FXML
     protected void switchTo2Player(ActionEvent event) throws IOException {
+
         Parent root = FXMLLoader.load(getClass().getResource("2_players.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -62,6 +68,23 @@ public class YahtzeeController {
         stage.show();
     }
 
+
+    @FXML
+    protected void switchToTEST(ActionEvent event) throws IOException {
+
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("tableviewtest.fxml"));
+        Parent root = loader.load();
+        YahtzeeController controller = loader.getController();
+
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+        controller.populateTestTable();
+    }
     /*
     --Dice logic--
      */
@@ -149,17 +172,73 @@ public class YahtzeeController {
     Tableview stuff
     */
 
+
+@FXML private TableView<ScoreTable> gameTable;
+
+@FXML private TableColumn<ScoreTable,String> categoryColumn;
+
+@FXML private TableColumn<ScoreTable,String> scoreColumn;
+
+@FXML private TableColumn<ScoreTable,String> score2Column;
+
+@FXML private TableColumn<ScoreTable,String> score3Column;
+
+@FXML private TableColumn<ScoreTable,String> score4Column;
+
+
+
+
+
+    public void populateTable_2Players(List<ScoreTable> scoreTableData) {
+        gameTable.getItems().clear(); // Clear existing data
+
+        if (scoreTableData != null) {
+            gameTable.getItems().addAll(scoreTableData);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //---------------------------------------------------TEST---------------------------------------------------------
     @FXML
-    private TableView<?> gameTable;
+    private TableView<Person> testtableView;
+    @FXML
+    private TableColumn<Person, String> idColumn;
+    @FXML
+    private TableColumn<Person, String> nameColumn;
+    @FXML
+    private TableColumn<Person, String> ageColumn;
+    @FXML
+    private TableColumn<Person, String> emailColumn;
 
-    @FXML TableColumn<?,?> Category;
-    @FXML TableColumn<?,?> Player1;
-    @FXML TableColumn<?,?> Player2;
+    private ObservableList<Person> personList = FXCollections.observableArrayList();
 
 
 
-//    public static class Player {
-//        private final SimpleStringProperty
-//    }
-//styleClass="vbox" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.YahtzeeController">
+    private void populateTestTable() {
+        // Populate the data
+        personList.add(new Person("1", "John", "30", "john@example.com"));
+        personList.add(new Person("2", "Alice", "25", "alice@example.com"));
+        // Add more data as needed
+
+        // Bind the data to the table columns
+        idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        ageColumn.setCellValueFactory(cellData -> cellData.getValue().ageProperty());
+        emailColumn.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
+
+        // Set the data to the table
+        testtableView.setItems(personList);
+    }
+    //-------------------------------------------------------------------------------------------------
 }
