@@ -185,8 +185,6 @@ public class YahtzeeController {
 @FXML private TableColumn<ScoreTableRow,String> score4Column;
 
 
-
-
     public void populateTable_2Players() {
         List<ScoreTableRow> dataList = new ArrayList<>();
 
