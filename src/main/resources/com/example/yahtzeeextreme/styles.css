@@ -13,11 +13,32 @@
     -fx-text-alignment: center;
 }
 
+
 .table-view{
+
     -fx-background-color: #545b52;
     -fx-background-radius: 5;
 }
 
+.table-view .table-cell{
+    -fx-alignment: CENTER;
+    -fx-border-color: transparent;
+    -fx-padding: 2 0 2 10px;
+}
+.table-row-cell: hover {
+    -fx-background-color: rgba(138, 159, 144, 0.07);
+    -fx-text-background-color: #035c99;
+}
+.table-row-cell: odd{
+    -fx-background-color: #93f9b911;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+.table-row-cell: even{
+    -fx-background-color: #1dbbdd11;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
 /*Dices*/
 
 .dice-hbox .button-in-hbox {

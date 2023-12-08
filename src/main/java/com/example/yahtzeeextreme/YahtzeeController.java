@@ -45,11 +45,16 @@ public class YahtzeeController {
         YahtzeeController controller = loader.getController();
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+
+        // Add the stylesheet here
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+
         stage.setScene(scene);
         stage.show();
         //filling the table
         controller.populateTable_2Players();
     }
+
     @FXML
     protected void switchTo3Player(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("3_players.fxml"));
@@ -167,6 +172,7 @@ public class YahtzeeController {
 
 
 @FXML private TableView<ScoreTableRow> gameTable;
+@FXML private ScrollPane tableScrollPane; // Add the ScrollPane
 
 @FXML private TableColumn<ScoreTableRow,String> categoryColumn;
 
@@ -199,19 +205,25 @@ public class YahtzeeController {
 
         gameTable.getItems().addAll(dataList);
 
-        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+        gameTable.setFixedCellSize(25); // Optional: Set the cell height to a fixed size if needed
 
+        tableScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Disable horizontal scrolling
+        tableScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Disable vertical scrolling
+
+        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         scoreColumn.setCellValueFactory(cellData -> {
             Map<String, List<Integer>> playerScores = cellData.getValue().getPlayerScores();
             Integer player1Score = playerScores.get("Player1").stream().findFirst().orElse(0);
             return new SimpleStringProperty(player1Score.toString());
         });
-
         score2Column.setCellValueFactory(cellData -> {
             Map<String, List<Integer>> playerScores = cellData.getValue().getPlayerScores();
             Integer player2Score = playerScores.get("Player2").stream().findFirst().orElse(0);
             return new SimpleStringProperty(player2Score.toString());
         });
     }
+
+
+
 
 }
