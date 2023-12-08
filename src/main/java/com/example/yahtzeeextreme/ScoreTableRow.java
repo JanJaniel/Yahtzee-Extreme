@@ -1,16 +1,15 @@
 package com.example.yahtzeeextreme;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ScoreTable {
-
-
+public class ScoreTableRow {
     private String category;
     private Map<String, List<Integer>> playerScores = new HashMap<>();
 
-    public ScoreTable(String category) {
+    public ScoreTableRow(String category) {
         this.category = category;
     }
 
@@ -22,6 +21,11 @@ public class ScoreTable {
         return playerScores;
     }
 
+    public void addPlayerScore(String playerName, List<Integer> scores) {
+        playerScores.put(playerName, scores);
+    }
 
-
+    public void addPlayerScore(String playerName, int score) {
+        playerScores.computeIfAbsent(playerName, k -> new ArrayList<>()).add(score);
+    }
 }

@@ -13,6 +13,6 @@
        <Button layoutX="192.0" layoutY="192.0" mnemonicParsing="false" onAction="#switchTo3Player" styleClass="play" text="3 Players" />
        <Button layoutX="192.0" layoutY="257.0" mnemonicParsing="false" onAction="#switchTo4Player" prefHeight="35.0" prefWidth="95.0" styleClass="play" text="4 Players" />
        <Button layoutX="192.0" layoutY="321.0" mnemonicParsing="false" onAction="#switchToBotPlayer" prefHeight="25.0" prefWidth="95.0" styleClass="play" text="VS BOT" />
-      <Button layoutX="434.0" layoutY="14.0" mnemonicParsing="false" text="TEST" onAction="#switchToTEST"/>
+
    </children>
 </AnchorPane>

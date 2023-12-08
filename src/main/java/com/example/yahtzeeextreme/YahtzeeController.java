@@ -1,5 +1,6 @@
 package com.example.yahtzeeextreme;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,12 +9,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
-import javax.security.auth.Destroyable;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class YahtzeeController {
 
@@ -32,14 +35,20 @@ public class YahtzeeController {
         stage.setScene(scene);
         stage.show();
     }
+
+
     @FXML
     protected void switchTo2Player(ActionEvent event) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("2_players.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("2_players.fxml"));
+        Parent root = loader.load();
+        YahtzeeController controller = loader.getController();
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        //filling the table
+        controller.populateTable_2Players();
     }
     @FXML
     protected void switchTo3Player(ActionEvent event) throws IOException {
@@ -69,22 +78,6 @@ public class YahtzeeController {
     }
 
 
-    @FXML
-    protected void switchToTEST(ActionEvent event) throws IOException {
-
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("tableviewtest.fxml"));
-        Parent root = loader.load();
-        YahtzeeController controller = loader.getController();
-
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
-        controller.populateTestTable();
-    }
     /*
     --Dice logic--
      */
@@ -173,72 +166,52 @@ public class YahtzeeController {
     */
 
 
-@FXML private TableView<ScoreTable> gameTable;
+@FXML private TableView<ScoreTableRow> gameTable;
 
-@FXML private TableColumn<ScoreTable,String> categoryColumn;
+@FXML private TableColumn<ScoreTableRow,String> categoryColumn;
 
-@FXML private TableColumn<ScoreTable,String> scoreColumn;
+@FXML private TableColumn<ScoreTableRow,String> scoreColumn;
 
-@FXML private TableColumn<ScoreTable,String> score2Column;
+@FXML private TableColumn<ScoreTableRow,String> score2Column;
 
-@FXML private TableColumn<ScoreTable,String> score3Column;
+@FXML private TableColumn<ScoreTableRow,String> score3Column;
 
-@FXML private TableColumn<ScoreTable,String> score4Column;
-
-
+@FXML private TableColumn<ScoreTableRow,String> score4Column;
 
 
 
-    public void populateTable_2Players(List<ScoreTable> scoreTableData) {
-        gameTable.getItems().clear(); // Clear existing data
 
-        if (scoreTableData != null) {
-            gameTable.getItems().addAll(scoreTableData);
+    public void populateTable_2Players() {
+        List<ScoreTableRow> dataList = new ArrayList<>();
+
+        String[] categories = {
+                "ACES", "TWOS", "THREES", "FOURS", "FIVES", "SIXES",
+                "THREE OF A KIND", "FOUR OF A KIND", "FULL HOUSE",
+                "SMALL STRAIGHT", "LARGE STRAIGHT", "YAHTZEE", "CHANCE"
+        };
+
+        for (String category : categories) {
+            ScoreTableRow row = new ScoreTableRow(category);
+            row.addPlayerScore("Player1", 0);
+            row.addPlayerScore("Player2", 0);
+            dataList.add(row);
         }
+
+        gameTable.getItems().addAll(dataList);
+
+        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+
+        scoreColumn.setCellValueFactory(cellData -> {
+            Map<String, List<Integer>> playerScores = cellData.getValue().getPlayerScores();
+            Integer player1Score = playerScores.get("Player1").stream().findFirst().orElse(0);
+            return new SimpleStringProperty(player1Score.toString());
+        });
+
+        score2Column.setCellValueFactory(cellData -> {
+            Map<String, List<Integer>> playerScores = cellData.getValue().getPlayerScores();
+            Integer player2Score = playerScores.get("Player2").stream().findFirst().orElse(0);
+            return new SimpleStringProperty(player2Score.toString());
+        });
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    //---------------------------------------------------TEST---------------------------------------------------------
-    @FXML
-    private TableView<Person> testtableView;
-    @FXML
-    private TableColumn<Person, String> idColumn;
-    @FXML
-    private TableColumn<Person, String> nameColumn;
-    @FXML
-    private TableColumn<Person, String> ageColumn;
-    @FXML
-    private TableColumn<Person, String> emailColumn;
-
-    private ObservableList<Person> personList = FXCollections.observableArrayList();
-
-
-
-    private void populateTestTable() {
-        // Populate the data
-        personList.add(new Person("1", "John", "30", "john@example.com"));
-        personList.add(new Person("2", "Alice", "25", "alice@example.com"));
-        // Add more data as needed
-
-        // Bind the data to the table columns
-        idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
-        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        ageColumn.setCellValueFactory(cellData -> cellData.getValue().ageProperty());
-        emailColumn.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
-
-        // Set the data to the table
-        testtableView.setItems(personList);
-    }
-    //-------------------------------------------------------------------------------------------------
 }
