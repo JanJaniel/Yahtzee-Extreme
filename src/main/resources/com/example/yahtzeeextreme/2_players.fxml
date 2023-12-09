@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="900.0" prefWidth="600.0" styleClass="anchorPane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.YahtzeeController">
+<AnchorPane prefHeight="900.0" prefWidth="600.0" styleClass="anchorPane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.GameController">
 
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
