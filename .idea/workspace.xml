@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="911e3cff-2344-42e8-9e02-a1900593d226" name="Changes" comment="some styling and fixing tavleview">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/YahtzeeApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/YahtzeeApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/2_players.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/2_players.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/main_menu_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/main_menu_view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles/GameStyles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles/GameStyles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles/MainmenuStyles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles/MainmenuStyles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/ScoreTableRow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/ScoreTableRow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,27 +44,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/User/Desktop/Github Projects/libraries/javafx-sdk-21/lib",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.JavaFX",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Desktop/Github Projects/libraries/javafx-sdk-21/lib&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Luca\Desktop\Yahtzee-Extreme\src\main\resources\com\example\yahtzeeextreme\styles" />
@@ -112,6 +109,7 @@
       <workItem from="1702022416435" duration="16582000" />
       <workItem from="1702074156687" duration="1494000" />
       <workItem from="1702140576344" duration="29163000" />
+      <workItem from="1702216810123" duration="2413000" />
     </task>
     <task id="LOCAL-00001" summary="basic start">
       <created>1697709270627</created>

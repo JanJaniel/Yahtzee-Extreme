@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -177,5 +178,15 @@ public class GameController {
         } else {
             button.setStyle("-fx-background-color: #22561b; -fx-text-fill: white;");
         }
+    }
+
+    private int calculateCurrentScore(Dice[] diceValues) {
+
+        int score = diceValues[0].getValue() +
+                    diceValues[1].getValue() +
+                    diceValues[2].getValue() +
+                    diceValues[3].getValue() +
+                    diceValues[4].getValue() ;
+        return score;
     }
 }

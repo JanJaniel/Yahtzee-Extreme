@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class ScoreTableRow {
     private String category;
+    private Integer score;
     private Map<String, List<Integer>> playerScores = new HashMap<>();
 
     public ScoreTableRow(String category) {
@@ -28,4 +29,9 @@ public class ScoreTableRow {
     public void addPlayerScore(String playerName, int score) {
         playerScores.computeIfAbsent(playerName, k -> new ArrayList<>()).add(score);
     }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
 }
