@@ -6,34 +6,39 @@
 
 .scroll-pane {
     -fx-background-color: #000000;
+
 }
 
 .table-view{
-    -fx-background-color: #545b52;
+    -fx-background-color: #10100f;
+
 }
 
 .table-view .column-header {
-    -fx-background-color: #545b52;
-    -fx-text-fill: white;
+    -fx-background-color: #0e0c0c;
+    -fx-text-fill: #7a7676;
 
 }
 
 .table-view .table-cell{
     -fx-alignment: CENTER;
-    -fx-border-color: transparent;
+    -fx-border-color: rgb(12, 12, 12); /* Red */
     -fx-padding: 2 0 2 10px;
+    -fx-text-fill: #646161;
 }
 
 .table-row-cell:odd{
-    -fx-background-color: #93f9b911;
+    -fx-background-color: rgba(68, 46, 46, 0.21);
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
+
 }
 
 .table-row-cell:even{
-    -fx-background-color: #1dbbdd11;
+    -fx-background-color: rgba(68, 46, 46, 0.21);
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
+
 }
 /*Dices*/
 
@@ -45,40 +50,35 @@
 }
 
 .dice-hbox .button-in-hbox:hover {
-    -fx-background-color: #035c99; /* green background on hover */
+    -fx-background-color: #313131; /* green background on hover */
     -fx-text-fill: white; /* White text on hover */
 }
 
 .roll {
+    -fx-font-size: 20;
     -fx-background-radius: 50em;
-    -fx-background-color: #545b52;
-    -fx-text-fill: white;
-}
-
-.roll:hover {
-    -fx-background-color: #035c99; /* Green background on hover */
-    -fx-text-fill: white; /* White text on hover */
+    -fx-background-color: #1e1f1e;
 }
 
 .basicButton {
     -fx-background-color: #545b52;
-    -fx-text-fill: white;
+    -fx-text-fill: #181717;
     -fx-background-radius: 10;
 }
 
 .basicButton:hover {
-    -fx-background-color: #035c99; /* Green background on hover */
-    -fx-text-fill: white; /* White text on hover */
+    -fx-background-color: #5d290a; /* Green background on hover */
+    -fx-text-fill: #9a9595; /* White text on hover */
 }
 
 
 .turns-left{
     -fx-font-size: 24px;
-    -fx-text-fill: white;
+    -fx-text-fill: #7a7676;
 }
 
 .playerTurn{
     -fx-font-size: 18;
-    -fx-text-fill: white;
+    -fx-text-fill: #7a7676;
 }
 

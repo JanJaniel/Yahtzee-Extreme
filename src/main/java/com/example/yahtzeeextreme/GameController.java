@@ -94,7 +94,7 @@ public class GameController {
 
         if (turnsLeft > 0){
             turnsLeft--;
-            turnsLeftLabel.setText("Turns left: " + turnsLeft);
+            turnsLeftLabel.setText("Rolls left: " + turnsLeft);
 
             // Get the current state of each button
             boolean isDice1Toggled = isButtonToggled(dice1Button);

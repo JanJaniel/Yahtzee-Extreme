@@ -4,18 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="911e3cff-2344-42e8-9e02-a1900593d226" name="Changes" comment="added a second controller class for readabilty">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles/MainmenuStyles.css" afterDir="false" />
+    <list default="true" id="911e3cff-2344-42e8-9e02-a1900593d226" name="Changes" comment="added another css file, a turn and player label">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/images/Squidward.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/images/dice_gray.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/images/dices.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/MenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/YahtzeeApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/YahtzeeApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/2_players.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/2_players.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/3_players.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/3_players.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/4_players.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/4_players.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/bot_player.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/bot_player.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/main_menu_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/main_menu_view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles/GameStyles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles/GameStyles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles/GameStyles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +112,7 @@
       <workItem from="1701906997595" duration="6475000" />
       <workItem from="1702022416435" duration="16582000" />
       <workItem from="1702074156687" duration="1494000" />
-      <workItem from="1702140576344" duration="15509000" />
+      <workItem from="1702140576344" duration="21080000" />
     </task>
     <task id="LOCAL-00001" summary="basic start">
       <created>1697709270627</created>
@@ -242,7 +239,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702143133687</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="added another css file, a turn and player label">
+      <option name="closed" value="true" />
+      <created>1702168199152</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1702168199152</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -258,7 +263,8 @@
     <MESSAGE value="pupulating table with 2 players" />
     <MESSAGE value="some styling of table cells" />
     <MESSAGE value="added a second controller class for readabilty" />
-    <option name="LAST_COMMIT_MESSAGE" value="added a second controller class for readabilty" />
+    <MESSAGE value="added another css file, a turn and player label" />
+    <option name="LAST_COMMIT_MESSAGE" value="added another css file, a turn and player label" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

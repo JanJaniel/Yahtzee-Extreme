@@ -6,6 +6,8 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
@@ -18,7 +20,7 @@
 
     <children>
 
-        <Label fx:id="turnsLeftLabel" layoutX="188.0" layoutY="14.0" styleClass="turns-left" text="Turns left: 3" />
+        <Label fx:id="turnsLeftLabel" layoutX="188.0" layoutY="14.0" styleClass="turns-left" text="Rolls left: 3" />
         <Label fx:id="playerTurn" layoutX="14.0" layoutY="18.0" styleClass="playerTurn" text="Player: 1" />
 
         <HBox layoutX="103.0" layoutY="65.0" prefHeight="51.0" prefWidth="295.0" spacing="10.0" styleClass="dice-hbox">
@@ -58,10 +60,15 @@
             </content>
         </ScrollPane>
 
-        <Button layoutX="208.0" layoutY="535.0" onAction="#rollDice" prefHeight="85.0" prefWidth="85.0" styleClass="roll" text="roll dices" />
+        <Button layoutX="208.0" layoutY="535.0" onAction="#rollDice" prefHeight="85.0" prefWidth="85.0" styleClass="roll" />
 
         <Button layoutX="354.0" layoutY="565.0" onAction="#finishTurn" styleClass="basicButton" text="Finish Turn" />
 
+        <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="215.0" layoutY="541.0">
+            <image>
+                <Image url="@images/dice_gray.png" /> <!-- Specify the path to your image -->
+            </image>
+        </ImageView>
 
     </children>
 </AnchorPane>
