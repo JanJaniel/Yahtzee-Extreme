@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="667.0" prefWidth="600.0" styleClass="anchorPane" stylesheets="@styles/GameStyles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.GameController">
+<AnchorPane prefHeight="667.0" prefWidth="600.0" styleClass="gamePane" stylesheets="@styles/GameStyles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.GameController">
 
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -20,8 +20,8 @@
 
     <children>
 
-        <Label fx:id="turnsLeftLabel" layoutX="188.0" layoutY="14.0" styleClass="turns-left" text="Rolls left: 3" />
-        <Label fx:id="playerTurn" layoutX="14.0" layoutY="18.0" styleClass="playerTurn" text="Player: 1" />
+        <Label fx:id="turnsLeftLabel" layoutX="151.0" layoutY="14.0" styleClass="turns-left" text="Rolls left: 3" />
+        <Label fx:id="playerTurn" styleClass="playerTurn" text=" Player: 1" />
 
         <HBox layoutX="103.0" layoutY="65.0" prefHeight="51.0" prefWidth="295.0" spacing="10.0" styleClass="dice-hbox">
             <Button fx:id="dice1Button" onAction="#toggleDice1Button" prefHeight="51.0" prefWidth="51.0" styleClass="button-in-hbox" text="">
@@ -48,7 +48,7 @@
 
         <Button layoutX="73.0" layoutY="565.0" mnemonicParsing="false" onAction="#switchToMainMenu" styleClass="basicButton" text="End Game" />
 
-        <ScrollPane fx:id="tableScrollPane" fitToHeight="true" fitToWidth="true" layoutX="73.0" layoutY="153.0" prefHeight="355.0" prefWidth="354.0" styleClass="tableScroll">
+        <ScrollPane fx:id="tableScrollPane" fitToHeight="true" fitToWidth="true" layoutX="73.0" layoutY="153.0" prefHeight="353.0" prefWidth="354.0" styleClass="tableScroll">
             <content>
                 <TableView fx:id="gameTable" layoutX="75.0" layoutY="125.0" prefHeight="350.0" prefWidth="350.0" styleClass="table">
                     <columns>
@@ -60,15 +60,17 @@
             </content>
         </ScrollPane>
 
-        <Button layoutX="208.0" layoutY="535.0" onAction="#rollDice" prefHeight="85.0" prefWidth="85.0" styleClass="roll" />
+        <Button layoutX="203.0" layoutY="535.0" onAction="#rollDice" prefHeight="85.0" prefWidth="85.0" styleClass="roll">
+         <graphic>
+      
+                    <ImageView fitHeight="70.0" fitWidth="70.0">
+                  <image>
+                      <Image url="@images/dice_gray.png" /> <!-- Specify the path to your image -->
+                  </image>
+              </ImageView>
+         </graphic></Button>
 
-        <Button layoutX="354.0" layoutY="565.0" onAction="#finishTurn" styleClass="basicButton" text="Finish Turn" />
-
-        <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="215.0" layoutY="541.0">
-            <image>
-                <Image url="@images/dice_gray.png" /> <!-- Specify the path to your image -->
-            </image>
-        </ImageView>
+        <Button layoutX="347.0" layoutY="565.0" onAction="#finishTurn" styleClass="basicButton" text="Finish Turn" />
 
     </children>
 </AnchorPane>

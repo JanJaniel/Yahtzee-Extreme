@@ -43,6 +43,8 @@ public class GameController {
     @FXML private TableColumn<ScoreTableRow,String> score3Column;
     @FXML private TableColumn<ScoreTableRow,String> score4Column;
 
+
+
     public void initialize(){
         List<ScoreTableRow> dataList = new ArrayList<>();
 

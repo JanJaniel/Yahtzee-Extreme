@@ -22,7 +22,7 @@ public class YahtzeeApplication extends Application {
             mainMenuScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/MainmenuStyles.css")).toExternalForm());
             stage.getIcons().add(new Image(getClass().getResource("/com/example/yahtzeeextreme/images/Squidward.png").toExternalForm()));
 
-            stage.initStyle(StageStyle.UTILITY);
+            //stage.initStyle(StageStyle.UTILITY);
             stage.setTitle("Yahtzee Extreme");
             stage.setScene(mainMenuScene);
             stage.show();

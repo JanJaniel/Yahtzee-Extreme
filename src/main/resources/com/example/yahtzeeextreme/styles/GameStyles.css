@@ -1,84 +1,99 @@
-.anchorPane {
-    -fx-background-color: #272121;
+.gamePane {
+    -fx-background-color: #6C757D;
     -fx-pref-width: 500px;
     -fx-pref-height: 400px;
 }
 
 .scroll-pane {
     -fx-background-color: #000000;
-
 }
 
 .table-view{
     -fx-background-color: #10100f;
-
+    -fx-text-fill: #343A40;
 }
 
 .table-view .column-header {
-    -fx-background-color: #0e0c0c;
-    -fx-text-fill: #7a7676;
+    -fx-background-color: #ADB5BD;
+    -fx-text-fill: #343A40;
+    -fx-border-color: #343A40;
 
 }
 
 .table-view .table-cell{
     -fx-alignment: CENTER;
-    -fx-border-color: rgb(12, 12, 12); /* Red */
+    -fx-border-color: #343A40;
     -fx-padding: 2 0 2 10px;
-    -fx-text-fill: #646161;
+    -fx-text-fill: #343A40;
 }
 
-.table-row-cell:odd{
-    -fx-background-color: rgba(68, 46, 46, 0.21);
+.table-row-cell{
+    -fx-background-color: #ADB5BD;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
-
 }
 
-.table-row-cell:even{
-    -fx-background-color: rgba(68, 46, 46, 0.21);
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-padding: 0.0em;
-
-}
 /*Dices*/
 
 .dice-hbox .button-in-hbox {
     -fx-font-size: 24.0;
-    -fx-background-color: #545b52;
-    -fx-text-fill: white;
+    -fx-background-color: #343A40;
+    -fx-text-fill: #CED4DA;
     -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 10, 0, 4, 4);
 }
 
 .dice-hbox .button-in-hbox:hover {
-    -fx-background-color: #313131; /* green background on hover */
-    -fx-text-fill: white; /* White text on hover */
+    -fx-background-color: #495057;
+    -fx-text-fill: #CED4DA;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0, 2, 2);
 }
 
 .roll {
     -fx-font-size: 20;
     -fx-background-radius: 50em;
-    -fx-background-color: #1e1f1e;
+    -fx-background-color: #212529;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 10, 0, 4, 4);
+}
+
+.roll:hover{
+    -fx-background-color: #495057;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 5, 0, 2, 2);
 }
 
 .basicButton {
-    -fx-background-color: #545b52;
-    -fx-text-fill: #181717;
+    -fx-background-color: #343A40;
+    -fx-text-fill: #ADB5BD;
     -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 10, 0, 2, 2);
+    -fx-pref-width: 80px;
 }
 
 .basicButton:hover {
-    -fx-background-color: #5d290a; /* Green background on hover */
-    -fx-text-fill: #9a9595; /* White text on hover */
+    -fx-background-color: #495057;
+    -fx-text-fill: #c5c2c2;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0, 2, 2);
 }
 
 
 .turns-left{
     -fx-font-size: 24px;
-    -fx-text-fill: #7a7676;
+    -fx-text-fill: #CED4DA;
+    -fx-background-radius: 10;
+    -fx-background-color: #495057;
+    -fx-pref-width: 200px;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-border-color: rgb(12, 12, 12);
+    -fx-border-radius: 9;
 }
 
 .playerTurn{
     -fx-font-size: 18;
-    -fx-text-fill: #7a7676;
+    -fx-text-fill: #CED4DA;
+    -fx-background-color: #495057;
+    -fx-border-color: rgb(12, 12, 12);
+    -fx-pref-width: 80px;
+    -fx-text-alignment: center;
 }
 

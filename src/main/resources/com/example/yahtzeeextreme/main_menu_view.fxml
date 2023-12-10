@@ -4,10 +4,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="anchorPane" stylesheets="@styles/GameStyles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.MenuController">
+<AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="menuPane" stylesheets="@styles/GameStyles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.MenuController">
    <children>
    
-         <Label layoutX="151.0" layoutY="56.0" styleClass="welcome" text="Yahtzee Extreme" />
+         <Label layoutX="100.0" layoutY="56.0" styleClass="welcome" text="Yahtzee Extreme" />
 
        <Button layoutX="192.0" layoutY="128.0" onAction="#switchTo2Player" styleClass="play" text="2 Players" />
        <Button layoutX="192.0" layoutY="192.0" mnemonicParsing="false" onAction="#switchTo3Player" styleClass="play" text="3 Players" />

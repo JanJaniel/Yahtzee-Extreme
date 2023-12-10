@@ -1,25 +1,32 @@
-.anchorPane {
-    -fx-background-color: #272121;
+.menuPane {
+    -fx-background-color: #6C757D;
     -fx-pref-width: 500px;
     -fx-pref-height: 400px;
 }
 
 .welcome {
-    -fx-text-fill: white;
-    -fx-font-size: 24px;
+    -fx-pref-width: 300px;
+    -fx-background-color: #CED4DA;
+    -fx-text-fill: #212529;
+    -fx-font-size: 30px;
     -fx-alignment: center;
     -fx-text-alignment: center;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 11, 0, 2, 2);
 }
 
 .play{
+    -fx-text-fill: #ADB5BD;
     -fx-font-size: 18px;
-    -fx-background-color: #545b52;
+    -fx-background-color: #343A40;
     -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 10, 0, 4, 4);
 
 }
 
 .play:hover{
-    -fx-background-color: #4b3b54;
-    -fx-text-fill: white;
+    -fx-background-color: #495057;
+    -fx-text-fill: #ADB5BD;
+    fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 5, 0, 4, 4);
 }
 
