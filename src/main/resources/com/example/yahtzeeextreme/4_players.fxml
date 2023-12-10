@@ -2,23 +2,22 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="581.0" prefWidth="618.0" styleClass="anchorPane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.GameController">
+<AnchorPane prefHeight="581.0" prefWidth="618.0" styleClass="anchorPane" stylesheets="@styles/GameStyles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.GameController">
 
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
-
-
     <children>
 
-        <HBox layoutX="103.0" layoutY="47.0" prefHeight="51.0" prefWidth="295.0" spacing="10.0" styleClass="dice-hbox">
+        <HBox layoutX="148.0" layoutY="47.0" prefHeight="51.0" prefWidth="295.0" spacing="10.0" styleClass="dice-hbox">
             <Button fx:id="dice1Button" onAction="#toggleDice1Button" prefHeight="51.0" prefWidth="51.0" styleClass="button-in-hbox" text="">
                 <font>
                     <Font size="24.0" />
@@ -41,21 +40,22 @@
                 </font></Button>
         </HBox>
 
+        <Button layoutX="45.0" layoutY="621.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefWidth="72.0" styleClass="basicButton" text="End Game" />
 
+        <ScrollPane fx:id="tableScrollPane" fitToHeight="true" fitToWidth="true" layoutX="45.0" layoutY="148.0" prefHeight="355.0" prefWidth="506.0" styleClass="tableScroll">
+            <content>
+                <TableView fx:id="gameTable" layoutX="55.0" layoutY="131.0" prefHeight="353.0" prefWidth="503.0" styleClass="table">
+                    <columns>
+                        <TableColumn fx:id="categoryColumn" minWidth="6.0" prefWidth="150.0" text="Categegory" />
+                        <TableColumn fx:id="scoreColumn" prefWidth="87.5" text="Player 1" />
+                        <TableColumn fx:id="score2Column" prefWidth="87.5" text="Player 2" />
+                        <TableColumn fx:id="score3Column" prefWidth="87.5" text="Player 3" />
+                        <TableColumn fx:id="score4Column" prefWidth="87.5" text="Player 4" />
+                    </columns>
+                </TableView>
+            </content>
+        </ScrollPane>
 
-
-        <Button layoutX="64.0" layoutY="516.0" mnemonicParsing="false" onAction="#switchToMainMenu" styleClass="endGame" text="End Game" />
-
-        <!-- TableView -->
-        <TableView fx:id="gameTable" layoutX="55.0" layoutY="131.0" prefHeight="300.0" prefWidth="400.0" styleClass="table">
-            <columns>
-                <TableColumn fx:id="category" minWidth="6.0" text="Categegory" />
-                <TableColumn fx:id="score" text="Player 1" />
-                <TableColumn fx:id="score2" text="Player 2" />
-                <TableColumn text="Player 3" />
-            <TableColumn text="Player 4" />
-
-            </columns></TableView>
-        <Button layoutX="208.0" layoutY="456.0" onAction="#rollDice" prefHeight="85.0" prefWidth="85.0" styleClass="roll" text="roll dices" />
+        <Button layoutX="255.0" layoutY="561.0" onAction="#rollDice" prefHeight="85.0" prefWidth="85.0" styleClass="roll" text="roll dices" />
     </children>
 </AnchorPane>

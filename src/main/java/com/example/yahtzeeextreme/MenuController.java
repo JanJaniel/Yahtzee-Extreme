@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import java.io.IOException;
+import java.util.Objects;
 
 public class MenuController {
 
@@ -18,6 +19,7 @@ public class MenuController {
         Parent root = FXMLLoader.load(getClass().getResource("2_players.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/GameStyles.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -26,6 +28,7 @@ public class MenuController {
         Parent root = FXMLLoader.load(getClass().getResource("3_players.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/GameStyles.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -34,6 +37,7 @@ public class MenuController {
         Parent root = FXMLLoader.load(getClass().getResource("4_players.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/GameStyles.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -42,6 +46,7 @@ public class MenuController {
         Parent root = FXMLLoader.load(getClass().getResource("bot_player.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/GameStyles.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

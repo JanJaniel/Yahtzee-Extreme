@@ -1,23 +1,21 @@
-
-
 .anchorPane {
     -fx-background-color: #272121;
     -fx-pref-width: 500px;
     -fx-pref-height: 400px;
 }
 
-.welcome {
-    -fx-text-fill: white;
-    -fx-font-size: 24px;
-    -fx-alignment: center;
-    -fx-text-alignment: center;
+.scroll-pane {
+    -fx-background-color: #000000;
 }
 
-
 .table-view{
-
     -fx-background-color: #545b52;
-    -fx-background-radius: 5;
+}
+
+.table-view .column-header {
+    -fx-background-color: #545b52;
+    -fx-text-fill: white;
+
 }
 
 .table-view .table-cell{
@@ -25,16 +23,14 @@
     -fx-border-color: transparent;
     -fx-padding: 2 0 2 10px;
 }
-.table-row-cell: hover {
-    -fx-background-color: rgba(138, 159, 144, 0.07);
-    -fx-text-background-color: #035c99;
-}
-.table-row-cell: odd{
+
+.table-row-cell:odd{
     -fx-background-color: #93f9b911;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
-.table-row-cell: even{
+
+.table-row-cell:even{
     -fx-background-color: #1dbbdd11;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
@@ -64,31 +60,25 @@
     -fx-text-fill: white; /* White text on hover */
 }
 
-.endGame {
+.basicButton {
     -fx-background-color: #545b52;
     -fx-text-fill: white;
     -fx-background-radius: 10;
 }
 
-.endGame:hover {
-    -fx-background-color: #531414; /* Green background on hover */
+.basicButton:hover {
+    -fx-background-color: #035c99; /* Green background on hover */
     -fx-text-fill: white; /* White text on hover */
 }
 
-.play{
-    -fx-font-size: 18px; /* Increase font size */
-    -fx-background-color: #545b52;
-    -fx-background-radius: 10;
 
-}
-
-.play:hover{
-    -fx-background-color: #4b3b54;
+.turns-left{
+    -fx-font-size: 24px;
     -fx-text-fill: white;
 }
 
-.table-view .column-header {
-    -fx-background-color: #787171;
-
-
+.playerTurn{
+    -fx-font-size: 18;
+    -fx-text-fill: white;
 }
+

@@ -1,5 +1,6 @@
 package com.example.yahtzeeextreme;
 
+import javafx.animation.KeyFrame;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,23 +8,28 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class GameController {
 
     private Stage stage;
-    private Scene scene;
     private YahtzeeDices yahtzeeDices = new YahtzeeDices();
+    @FXML private Label playerTurn;
+    @FXML private Label turnsLeftLabel;
+
+    private int currentPlayer = 1;
+    private int turnsLeft = 3;
+
     @FXML private Button dice1Button;
     @FXML private Button dice2Button;
     @FXML private Button dice3Button;
@@ -61,6 +67,7 @@ public class GameController {
         tableScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Disable vertical scrolling
 
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+
         scoreColumn.setCellValueFactory(cellData -> {
             Map<String, List<Integer>> playerScores = cellData.getValue().getPlayerScores();
             Integer player1Score = playerScores.get("Player1").stream().findFirst().orElse(0);
@@ -75,27 +82,59 @@ public class GameController {
 
     @FXML
     protected void switchToMainMenu(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("main_menu_view.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main_menu_view.fxml")));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/MainmenuStyles.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
 
-    @FXML
-    protected void rollDice(ActionEvent event) {
-        // Get the current state of each button
-        boolean isDice1Toggled = isButtonToggled(dice1Button);
-        boolean isDice2Toggled = isButtonToggled(dice2Button);
-        boolean isDice3Toggled = isButtonToggled(dice3Button);
-        boolean isDice4Toggled = isButtonToggled(dice4Button);
-        boolean isDice5Toggled = isButtonToggled(dice5Button);
-        if (!isDice1Toggled) yahtzeeDices.getDices()[0].rollDice();
-        if (!isDice2Toggled) yahtzeeDices.getDices()[1].rollDice();
-        if (!isDice3Toggled) yahtzeeDices.getDices()[2].rollDice();
-        if (!isDice4Toggled) yahtzeeDices.getDices()[3].rollDice();
-        if (!isDice5Toggled) yahtzeeDices.getDices()[4].rollDice();
-        updateDiceLabels();
+    @FXML protected void rollDice() {
+
+        if (turnsLeft > 0){
+            turnsLeft--;
+            turnsLeftLabel.setText("Turns left: " + turnsLeft);
+
+            // Get the current state of each button
+            boolean isDice1Toggled = isButtonToggled(dice1Button);
+            boolean isDice2Toggled = isButtonToggled(dice2Button);
+            boolean isDice3Toggled = isButtonToggled(dice3Button);
+            boolean isDice4Toggled = isButtonToggled(dice4Button);
+            boolean isDice5Toggled = isButtonToggled(dice5Button);
+            if (!isDice1Toggled) yahtzeeDices.getDices()[0].rollDice();
+            if (!isDice2Toggled) yahtzeeDices.getDices()[1].rollDice();
+            if (!isDice3Toggled) yahtzeeDices.getDices()[2].rollDice();
+            if (!isDice4Toggled) yahtzeeDices.getDices()[3].rollDice();
+            if (!isDice5Toggled) yahtzeeDices.getDices()[4].rollDice();
+            updateDiceLabels();
+        }
+    }
+
+    // resets the dices for next player
+    @FXML private void finishTurn(){
+        turnsLeft = 3;
+        turnsLeftLabel.setText("Turns left: " + turnsLeft);
+
+        dice1Button.setText("");
+        dice2Button.setText("");
+        dice3Button.setText("");
+        dice4Button.setText("");
+        dice5Button.setText("");
+
+        dice1Button.setStyle("");
+        dice2Button.setStyle("");
+        dice3Button.setStyle("");
+        dice4Button.setStyle("");
+        dice5Button.setStyle("");
+
+        if (currentPlayer == 2){
+            currentPlayer = 1;
+            playerTurn.setText("Player: " + currentPlayer);
+        }else{
+            currentPlayer++;
+            playerTurn.setText("Player: " + currentPlayer);
+        }
     }
 
     private void updateDiceLabels() {

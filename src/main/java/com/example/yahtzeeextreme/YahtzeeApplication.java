@@ -17,9 +17,9 @@ public class YahtzeeApplication extends Application {
 
         try{
 
-            Parent root = FXMLLoader.load(getClass().getResource("main_menu_view.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main_menu_view.fxml")));
             Scene mainMenuScene = new Scene(root);
-            mainMenuScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
+            mainMenuScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/MainmenuStyles.css")).toExternalForm());
             //stage.getIcons().add(new Image("/com/example/yahtzeeextreme/images/icon_top_left.jpg"));
             stage.initStyle(StageStyle.UTILITY);
             stage.setTitle("Yahtzee Extreme");
