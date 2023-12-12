@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="911e3cff-2344-42e8-9e02-a1900593d226" name="Changes" comment="some styling and fixing tavleview">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/ScoreTableRow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/ScoreTableRow.java" afterDir="false" />
@@ -110,6 +109,7 @@
       <workItem from="1702074156687" duration="1494000" />
       <workItem from="1702140576344" duration="29163000" />
       <workItem from="1702216810123" duration="2413000" />
+      <workItem from="1702388864940" duration="7066000" />
     </task>
     <task id="LOCAL-00001" summary="basic start">
       <created>1697709270627</created>

@@ -1,6 +1,8 @@
 package com.example.yahtzeeextreme;
 
 import javafx.animation.KeyFrame;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +16,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,17 +39,18 @@ public class GameController {
     @FXML private Button dice3Button;
     @FXML private Button dice4Button;
     @FXML private Button dice5Button;
+
+
+
     @FXML private TableView<ScoreTableRow> gameTable;
     @FXML private ScrollPane tableScrollPane; // Add the ScrollPane
     @FXML private TableColumn<ScoreTableRow,String> categoryColumn;
-    @FXML private TableColumn<ScoreTableRow,String> scoreColumn;
-    @FXML private TableColumn<ScoreTableRow,String> score2Column;
-    @FXML private TableColumn<ScoreTableRow,String> score3Column;
-    @FXML private TableColumn<ScoreTableRow,String> score4Column;
+    @FXML private TableColumn<ScoreTableRow,Integer> scoreColumn;
+    @FXML private TableColumn<ScoreTableRow,Integer> score2Column;
+    @FXML private TableColumn<ScoreTableRow,Integer> score3Column;
+    @FXML private TableColumn<ScoreTableRow,Integer> score4Column;
 
-
-
-    public void initialize(){
+    public void initialize() {
         List<ScoreTableRow> dataList = new ArrayList<>();
 
         String[] categories = {
@@ -57,31 +61,56 @@ public class GameController {
 
         for (String category : categories) {
             ScoreTableRow row = new ScoreTableRow(category);
-            row.addPlayerScore("Player1", 0);
-            row.addPlayerScore("Player2", 0);
             dataList.add(row);
         }
 
         gameTable.getItems().addAll(dataList);
 
-        gameTable.setFixedCellSize(25); // Optional: Set the cell height to a fixed size if needed
+        gameTable.setFixedCellSize(25);
 
-        tableScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Disable horizontal scrolling
-        tableScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // Disable vertical scrolling
+        tableScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        tableScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
-        scoreColumn.setCellValueFactory(cellData -> {
-            Map<String, List<Integer>> playerScores = cellData.getValue().getPlayerScores();
-            Integer player1Score = playerScores.get("Player1").stream().findFirst().orElse(0);
-            return new SimpleStringProperty(player1Score.toString());
+        gameTable.setEditable(true); // Set editable to true
+
+
+        scoreColumn.setCellValueFactory(cellData -> cellData.getValue().getPlayer1ScoreProperty().asObject());
+        score2Column.setCellValueFactory(cellData -> cellData.getValue().getPlayer2ScoreProperty().asObject());
+
+        gameTable.setRowFactory(tv -> {
+            TableRow<ScoreTableRow> row = new TableRow<>();
+            row.setEditable(false);
+            return row;
         });
-        score2Column.setCellValueFactory(cellData -> {
-            Map<String, List<Integer>> playerScores = cellData.getValue().getPlayerScores();
-            Integer player2Score = playerScores.get("Player2").stream().findFirst().orElse(0);
-            return new SimpleStringProperty(player2Score.toString());
+
+        // Handle the row click to update values
+        gameTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1 && !gameTable.getSelectionModel().isEmpty()) {
+                ScoreTableRow selectedItem = gameTable.getSelectionModel().getSelectedItem();
+                int newValue = calculateCurrentScore(yahtzeeDices.getDices());
+
+                // Determine which column is selected and update the corresponding score
+                TableColumn<ScoreTableRow, ?> selectedColumn = gameTable.getFocusModel().getFocusedCell().getTableColumn();
+                if (selectedColumn == scoreColumn) {
+                    selectedItem.setPlayer1Score(newValue);
+                } else if (selectedColumn == score2Column) {
+                    selectedItem.setPlayer2Score(newValue);
+                }
+
+                gameTable.refresh();
+            }
         });
+
+
     }
+
+
+
+
+
+
 
     @FXML
     protected void switchToMainMenu(ActionEvent event) throws IOException {
@@ -111,6 +140,8 @@ public class GameController {
             if (!isDice4Toggled) yahtzeeDices.getDices()[3].rollDice();
             if (!isDice5Toggled) yahtzeeDices.getDices()[4].rollDice();
             updateDiceLabels();
+            System.out.println(calculateCurrentScore(yahtzeeDices.getDices()));
+
         }
     }
 

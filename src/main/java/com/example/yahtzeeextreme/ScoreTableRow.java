@@ -1,37 +1,38 @@
 package com.example.yahtzeeextreme;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class ScoreTableRow {
     private String category;
-    private Integer score;
-    private Map<String, List<Integer>> playerScores = new HashMap<>();
+    private IntegerProperty player1Score = new SimpleIntegerProperty();
+    private IntegerProperty player2Score = new SimpleIntegerProperty();
 
     public ScoreTableRow(String category) {
         this.category = category;
+        this.player1Score.set(0);
+        this.player2Score.set(0);
     }
 
     public String getCategory() {
         return category;
     }
 
-    public Map<String, List<Integer>> getPlayerScores() {
-        return playerScores;
+    public void setPlayer1Score(int player1Score) {
+        this.player1Score.set(player1Score);
     }
 
-    public void addPlayerScore(String playerName, List<Integer> scores) {
-        playerScores.put(playerName, scores);
+    public void setPlayer2Score(int player2Score) {
+        this.player2Score.set(player2Score);
     }
 
-    public void addPlayerScore(String playerName, int score) {
-        playerScores.computeIfAbsent(playerName, k -> new ArrayList<>()).add(score);
+    public IntegerProperty getPlayer1ScoreProperty() {
+        return player1Score;
     }
 
-    public void setScore(Integer score) {
-        this.score = score;
+    public IntegerProperty getPlayer2ScoreProperty() {
+        return player2Score;
     }
+
 
 }
