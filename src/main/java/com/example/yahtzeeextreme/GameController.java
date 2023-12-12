@@ -11,37 +11,49 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
+import java.util.*;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class GameController {
 
     private Stage stage;
     private YahtzeeDices yahtzeeDices = new YahtzeeDices();
-    @FXML private Label playerTurn;
-    @FXML private Label turnsLeftLabel;
+    @FXML
+    private Label playerTurn;
+    @FXML
+    private Label turnsLeftLabel;
 
     private int currentPlayer = 1;
     private int turnsLeft = 3;
 
-    @FXML private Button dice1Button;
-    @FXML private Button dice2Button;
-    @FXML private Button dice3Button;
-    @FXML private Button dice4Button;
-    @FXML private Button dice5Button;
+    @FXML
+    private Button dice1Button;
+    @FXML
+    private Button dice2Button;
+    @FXML
+    private Button dice3Button;
+    @FXML
+    private Button dice4Button;
+    @FXML
+    private Button dice5Button;
 
 
-
-    @FXML private TableView<ScoreTableRow> gameTable;
-    @FXML private ScrollPane tableScrollPane; // Add the ScrollPane
-    @FXML private TableColumn<ScoreTableRow,String> categoryColumn;
-    @FXML private TableColumn<ScoreTableRow,String> scoreColumn;
-    @FXML private TableColumn<ScoreTableRow,String> score2Column;
-    @FXML private TableColumn<ScoreTableRow,String> score3Column;
-    @FXML private TableColumn<ScoreTableRow,String> score4Column;
+    @FXML
+    private TableView<ScoreTableRow> gameTable;
+    @FXML
+    private ScrollPane tableScrollPane; // Add the ScrollPane
+    @FXML
+    private TableColumn<ScoreTableRow, String> categoryColumn;
+    @FXML
+    private TableColumn<ScoreTableRow, String> scoreColumn;
+    @FXML
+    private TableColumn<ScoreTableRow, String> score2Column;
+    @FXML
+    private TableColumn<ScoreTableRow, String> score3Column;
+    @FXML
+    private TableColumn<ScoreTableRow, String> score4Column;
 
     public void initialize() {
         List<ScoreTableRow> dataList = new ArrayList<>();
@@ -81,7 +93,7 @@ public class GameController {
         // Handle the row click to update values
         gameTable.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1 && !gameTable.getSelectionModel().isEmpty()) {
-                if (turnsLeft < 3){
+                if (turnsLeft < 3) {
                     updateCellValue();
                 }
             }
@@ -90,21 +102,31 @@ public class GameController {
 
     private void updateCellValue() {
 
-            ScoreTableRow selectedItem = gameTable.getSelectionModel().getSelectedItem();
-            String newValue = String.valueOf(calculateCurrentScore(yahtzeeDices.getDices()));
+        ScoreTableRow selectedItem = gameTable.getSelectionModel().getSelectedItem();
+        TableColumn<ScoreTableRow, ?> selectedColumn = gameTable.getFocusModel().getFocusedCell().getTableColumn();
 
-            // Determine which column is selected and update the corresponding score
-            TableColumn<ScoreTableRow, ?> selectedColumn = gameTable.getFocusModel().getFocusedCell().getTableColumn();
-            if (selectedColumn == scoreColumn && selectedItem.getPlayer1Score().isEmpty() && currentPlayer == 1) {
-                selectedItem.setPlayer1Score(newValue);
-                updateScoreRow();
-                finishTurn();
-            } else if (selectedColumn == score2Column &&  selectedItem.getPlayer2Score().isEmpty() && currentPlayer == 2) {
-                selectedItem.setPlayer2Score(newValue);
-                updateScoreRow();
-                finishTurn();
-            }
-            gameTable.refresh();
+        String category = gameTable.getItems().stream()
+                .filter(item -> item.equals(selectedItem)) // Find the selected item
+                .findFirst()
+                .map(ScoreTableRow::getCategory)
+                .orElse(null);
+
+        System.out.println("Selected Category: " + category);
+
+        String newValue = String.valueOf(calculateCurrentScore(yahtzeeDices.getDices(), category));
+
+        // Determine which column is selected and update the corresponding score
+
+        if (selectedColumn == scoreColumn && selectedItem.getPlayer1Score().isEmpty() && currentPlayer == 1) {
+            selectedItem.setPlayer1Score(newValue);
+            updateScoreRow();
+            finishTurn();
+        } else if (selectedColumn == score2Column && selectedItem.getPlayer2Score().isEmpty() && currentPlayer == 2) {
+            selectedItem.setPlayer2Score(newValue);
+            updateScoreRow();
+            finishTurn();
+        }
+        gameTable.refresh();
     }
 
     private void updateScoreRow() {
@@ -132,16 +154,17 @@ public class GameController {
     @FXML
     protected void switchToMainMenu(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main_menu_view.fxml")));
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/MainmenuStyles.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
 
-    @FXML protected void rollDice() {
+    @FXML
+    protected void rollDice() {
 
-        if (turnsLeft > 0){
+        if (turnsLeft > 0) {
             turnsLeft--;
             turnsLeftLabel.setText("Rolls left: " + turnsLeft);
 
@@ -161,7 +184,8 @@ public class GameController {
     }
 
     // resets the dices for next player
-    @FXML private void finishTurn(){
+    @FXML
+    private void finishTurn() {
         turnsLeft = 3;
         turnsLeftLabel.setText("Turns left: " + turnsLeft);
 
@@ -177,10 +201,10 @@ public class GameController {
         dice4Button.setStyle("");
         dice5Button.setStyle("");
 
-        if (currentPlayer == 2){
+        if (currentPlayer == 2) {
             currentPlayer = 1;
             playerTurn.setText("Player: " + currentPlayer);
-        }else{
+        } else {
             currentPlayer++;
             playerTurn.setText("Player: " + currentPlayer);
         }
@@ -195,19 +219,29 @@ public class GameController {
         dice4Button.setText(String.valueOf(dices[3].getValue()));
         dice5Button.setText(String.valueOf(dices[4].getValue()));
     }
-    @FXML protected void toggleDice1Button() {
+
+    @FXML
+    protected void toggleDice1Button() {
         toggleButtonState(dice1Button);
     }
-    @FXML protected void toggleDice2Button() {
+
+    @FXML
+    protected void toggleDice2Button() {
         toggleButtonState(dice2Button);
     }
-    @FXML protected void toggleDice3Button() {
+
+    @FXML
+    protected void toggleDice3Button() {
         toggleButtonState(dice3Button);
     }
-    @FXML protected void toggleDice4Button() {
+
+    @FXML
+    protected void toggleDice4Button() {
         toggleButtonState(dice4Button);
     }
-    @FXML protected void toggleDice5Button() {
+
+    @FXML
+    protected void toggleDice5Button() {
         toggleButtonState(dice5Button);
     }
 
@@ -226,13 +260,196 @@ public class GameController {
         }
     }
 
-    private int calculateCurrentScore(Dice[] diceValues) {
+    // Score logic
+    private int calculateCurrentScore(Dice[] diceValues, String category) {
+        int score = 0;
+        switch (category) {
+            case "ACES":
+                for (Dice dice : diceValues) {
+                    if (dice.getValue() == 1) {
+                        score += 1;
+                    }
+                }
+                break;
+            case "TWOS":
+                for (Dice dice : diceValues) {
+                    if (dice.getValue() == 2) {
+                        score += 2;
+                    }
+                }
+                break;
+            case "THREES":
+                for (Dice dice : diceValues) {
+                    if (dice.getValue() == 3) {
+                        score += 3;
+                    }
+                }
+                break;
+            case "FOURS":
+                for (Dice dice : diceValues) {
+                    if (dice.getValue() == 4) {
+                        score += 4;
+                    }
+                }
+                break;
+            case "FIVES":
+                for (Dice dice : diceValues) {
+                    if (dice.getValue() == 5) {
+                        score += 5;
+                    }
+                }
+                break;
+            case "SIXES":
+                for (Dice dice : diceValues) {
+                    if (dice.getValue() == 6) {
+                        score += 6;
+                    }
+                }
+                break;
+            case "THREE OF A KIND":
+                if(isThreeOfAKind(diceValues)){
+                    for (Dice num : diceValues) {
+                        score += num.getValue();
+                    }
+                }
+            break;
+            case "FOUR OF A KIND":
+                if(isFourOfAKind(diceValues)){
+                    for (Dice num : diceValues) {
+                        score += num.getValue();
+                    }
+                }
+            break;
+            case "FULL HOUSE":
+                if(isFullHouse(diceValues)){
+                    score = 25;
+                }
+            break;
+            case "SMALL STRAIGHT":
+                if(hasSmallStraight(diceValues)){
+                    score = 30;
+                }
+            break;
+            case "LARGE STRAIGHT":
+                if (hasLargeStraight(diceValues)){
+                    score = 40;
+                }
+            break;
+            case "YAHTZEE":
+                if(areAllNumbersSame(diceValues)){
+                    score = 50;
+                }
+            break;
 
-        int score = diceValues[0].getValue() +
-                    diceValues[1].getValue() +
-                    diceValues[2].getValue() +
-                    diceValues[3].getValue() +
-                    diceValues[4].getValue() ;
+            case"CHANCE":
+                for (Dice num : diceValues) {
+                    score += num.getValue();
+                }
+            break;
+        }
         return score;
     }
+
+
+    private static boolean isThreeOfAKind(Dice[] numbers){
+
+        Map<Dice, Integer> countMapThree = new HashMap<>();
+
+        for (Dice d : numbers) {
+            countMapThree.put(d, countMapThree.getOrDefault(d, 0) + 1);
+        }
+        // Checking if any number occurs at least four times
+        for (int count : countMapThree.values()) {
+            if (count >= 3) {
+               return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isFourOfAKind(Dice[] numbers){
+
+        Map<Dice, Integer> countMapThree = new HashMap<>();
+
+        for (Dice d : numbers) {
+            countMapThree.put(d, countMapThree.getOrDefault(d, 0) + 1);
+        }
+
+        // Checking if any number occurs at least three times
+        for (int count : countMapThree.values()) {
+            if (count >= 4) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isFullHouse(Dice[] numbers) {
+        // Use a HashMap to count the occurrences of each number
+        Map<Integer, Integer> countMap = new HashMap<>();
+        // Count occurrences
+        for (Dice num : numbers) {
+            countMap.put(num.getValue(), countMap.getOrDefault(num.getValue(), 0) + 1);
+        }
+        // Check for a full house
+        boolean hasThreeOfAKind = false;
+        boolean hasPair = false;
+
+        for (int count : countMap.values()) {
+            if (count == 3) {
+                hasThreeOfAKind = true;
+            } else if (count == 2) {
+                hasPair = true;
+            }
+        }
+
+        return hasThreeOfAKind && hasPair;
+    }
+
+    private static boolean areAllNumbersSame(Dice[] diceValues) {
+        int firstNumber = diceValues[0].getValue();
+
+        for (int i = 0; i < 5; i++) {
+            if (diceValues[i].getValue() != firstNumber) {
+
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean hasSmallStraight(Dice[] numbers) {
+        // Sort the array based on the dice values
+        Arrays.sort(numbers, (dice1, dice2) -> Integer.compare(dice1.getValue(), dice2.getValue()));
+
+        // Check for each possible small straight
+        for (int i = 0; i < numbers.length - 3; i++) {
+            if (numbers[i].getValue() + 1 == numbers[i + 1].getValue() &&
+                    numbers[i + 1].getValue() == numbers[i + 2].getValue() &&
+                    numbers[i + 2].getValue() == numbers[i + 3].getValue() - 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean hasLargeStraight(Dice[] numbers) {
+        // Sort the array based on the dice values
+        Arrays.sort(numbers, (dice1, dice2) -> Integer.compare(dice1.getValue(), dice2.getValue()));
+
+        // Check for each possible large straight
+        for (int i = 0; i < numbers.length - 4; i++) {
+            if (numbers[i].getValue() + 1 == numbers[i + 1].getValue() &&
+                    numbers[i + 1].getValue() + 1 == numbers[i + 2].getValue() &&
+                    numbers[i + 2].getValue() + 1 == numbers[i + 3].getValue() &&
+                    numbers[i + 3].getValue() + 1 == numbers[i + 4].getValue()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
+
