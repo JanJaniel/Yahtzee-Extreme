@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="911e3cff-2344-42e8-9e02-a1900593d226" name="Changes" comment="added score calculation in table">
+    <list default="true" id="911e3cff-2344-42e8-9e02-a1900593d226" name="Changes" comment="yahtzee game implemation for 2 players is finished (didnt check for bugs)">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/sounds/dice-142528.mp3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles/GameStyles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles/GameStyles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +111,7 @@
       <workItem from="1702074156687" duration="1494000" />
       <workItem from="1702140576344" duration="29163000" />
       <workItem from="1702216810123" duration="2413000" />
-      <workItem from="1702388864940" duration="18335000" />
+      <workItem from="1702388864940" duration="25161000" />
     </task>
     <task id="LOCAL-00001" summary="basic start">
       <created>1697709270627</created>
@@ -265,7 +268,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702407859002</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="yahtzee game implemation for 2 players is finished (didnt check for bugs)">
+      <created>1702412669843</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1702412669843</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -286,7 +296,8 @@
     <MESSAGE value="now able to click cell and give new value" />
     <MESSAGE value="applied more refined table logic" />
     <MESSAGE value="added score calculation in table" />
-    <option name="LAST_COMMIT_MESSAGE" value="added score calculation in table" />
+    <MESSAGE value="yahtzee game implemation for 2 players is finished (didnt check for bugs)" />
+    <option name="LAST_COMMIT_MESSAGE" value="yahtzee game implemation for 2 players is finished (didnt check for bugs)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

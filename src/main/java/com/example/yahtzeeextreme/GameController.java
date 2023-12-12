@@ -9,8 +9,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.File;
+import java.io.IOException;
 
+
+import java.io.File;
 import java.util.*;
 
 import java.io.IOException;
@@ -180,6 +188,20 @@ public class GameController {
             if (!isDice4Toggled) yahtzeeDices.getDices()[3].rollDice();
             if (!isDice5Toggled) yahtzeeDices.getDices()[4].rollDice();
             updateDiceLabels();
+            playMP3("C:\\Users\\User\\Desktop\\Yahtzee-Extreme\\src\\main\\resources\\com\\example\\yahtzeeextreme\\sounds\\dice-142528.mp3");
+
+        }
+    }
+
+    private void playMP3(String filePath) {
+        try {
+            File soundFile = new File(filePath);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
         }
     }
 
@@ -326,6 +348,7 @@ public class GameController {
                 }
             break;
             case "SMALL STRAIGHT":
+                System.out.println(hasLargeStraight(diceValues));
                 if(hasSmallStraight(diceValues)){
                     score = 30;
                 }
@@ -353,10 +376,10 @@ public class GameController {
 
     private static boolean isThreeOfAKind(Dice[] numbers){
 
-        Map<Dice, Integer> countMapThree = new HashMap<>();
+        Map<Integer, Integer> countMapThree = new HashMap<>();
 
         for (Dice d : numbers) {
-            countMapThree.put(d, countMapThree.getOrDefault(d, 0) + 1);
+            countMapThree.put(d.getValue(), countMapThree.getOrDefault(d.getValue(), 0) + 1);
         }
         // Checking if any number occurs at least four times
         for (int count : countMapThree.values()) {
@@ -369,10 +392,10 @@ public class GameController {
 
     private static boolean isFourOfAKind(Dice[] numbers){
 
-        Map<Dice, Integer> countMapThree = new HashMap<>();
+        Map<Integer, Integer> countMapThree = new HashMap<>();
 
         for (Dice d : numbers) {
-            countMapThree.put(d, countMapThree.getOrDefault(d, 0) + 1);
+            countMapThree.put(d.getValue(), countMapThree.getOrDefault(d.getValue(), 0) + 1);
         }
 
         // Checking if any number occurs at least three times
@@ -419,24 +442,26 @@ public class GameController {
     }
 
     public static boolean hasSmallStraight(Dice[] numbers) {
-        // Sort the array based on the dice values
-        Arrays.sort(numbers, (dice1, dice2) -> Integer.compare(dice1.getValue(), dice2.getValue()));
 
-        // Check for each possible small straight
+        Arrays.sort(numbers, Comparator.comparingInt(Dice::getValue));
+
+        // Check for a small straight
         for (int i = 0; i < numbers.length - 3; i++) {
-            if (numbers[i].getValue() + 1 == numbers[i + 1].getValue() &&
-                    numbers[i + 1].getValue() == numbers[i + 2].getValue() &&
-                    numbers[i + 2].getValue() == numbers[i + 3].getValue() - 1) {
-                return true;
+            if (numbers[i + 1].getValue() - numbers[i].getValue() <= 1 &&
+                    numbers[i + 2].getValue() - numbers[i + 1].getValue() <= 1 &&
+                    numbers[i + 3].getValue() - numbers[i + 2].getValue() <= 1) {
+                return true; // If there are four consecutive numbers, it's a small straight
             }
         }
-
         return false;
+
+
     }
+
 
     public static boolean hasLargeStraight(Dice[] numbers) {
         // Sort the array based on the dice values
-        Arrays.sort(numbers, (dice1, dice2) -> Integer.compare(dice1.getValue(), dice2.getValue()));
+        Arrays.sort(numbers, Comparator.comparingInt(Dice::getValue));
 
         // Check for each possible large straight
         for (int i = 0; i < numbers.length - 4; i++) {
