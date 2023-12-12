@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="911e3cff-2344-42e8-9e02-a1900593d226" name="Changes" comment="some styling and fixing tavleview">
+    <list default="true" id="911e3cff-2344-42e8-9e02-a1900593d226" name="Changes" comment="applied more refined table logic">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/ScoreTableRow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/ScoreTableRow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/2_players.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/2_players.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +110,7 @@
       <workItem from="1702074156687" duration="1494000" />
       <workItem from="1702140576344" duration="29163000" />
       <workItem from="1702216810123" duration="2413000" />
-      <workItem from="1702388864940" duration="7066000" />
+      <workItem from="1702388864940" duration="13412000" />
     </task>
     <task id="LOCAL-00001" summary="basic start">
       <created>1697709270627</created>
@@ -252,7 +253,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702185185742</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="now able to click cell and give new value">
+      <created>1702401312627</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1702401312627</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,7 +278,9 @@
     <MESSAGE value="added a second controller class for readabilty" />
     <MESSAGE value="added another css file, a turn and player label" />
     <MESSAGE value="some styling and fixing tavleview" />
-    <option name="LAST_COMMIT_MESSAGE" value="some styling and fixing tavleview" />
+    <MESSAGE value="now able to click cell and give new value" />
+    <MESSAGE value="applied more refined table logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="applied more refined table logic" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

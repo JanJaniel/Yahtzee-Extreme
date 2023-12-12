@@ -23,7 +23,7 @@
         <Label fx:id="turnsLeftLabel" layoutX="151.0" layoutY="14.0" styleClass="turns-left" text="Rolls left: 3" />
         <Label fx:id="playerTurn" styleClass="playerTurn" text=" Player: 1" />
 
-        <HBox layoutX="103.0" layoutY="65.0" prefHeight="51.0" prefWidth="295.0" spacing="10.0" styleClass="dice-hbox">
+        <HBox layoutX="104.0" layoutY="77.0" prefHeight="51.0" prefWidth="295.0" spacing="10.0" styleClass="dice-hbox">
             <Button fx:id="dice1Button" onAction="#toggleDice1Button" prefHeight="51.0" prefWidth="51.0" styleClass="button-in-hbox" text="">
             <font>
                <Font size="24.0" />
@@ -46,9 +46,9 @@
             </font></Button>
         </HBox>
 
-        <Button layoutX="73.0" layoutY="565.0" mnemonicParsing="false" onAction="#switchToMainMenu" styleClass="basicButton" text="End Game" />
+        <Button layoutX="73.0" layoutY="595.0" mnemonicParsing="false" onAction="#switchToMainMenu" styleClass="basicButton" text="End Game" />
 
-        <ScrollPane fx:id="tableScrollPane" fitToHeight="true" fitToWidth="true" layoutX="73.0" layoutY="153.0" prefHeight="353.0" prefWidth="354.0" styleClass="tableScroll">
+        <ScrollPane fx:id="tableScrollPane" fitToHeight="true" fitToWidth="true" layoutX="73.0" layoutY="153.0" prefHeight="378.0" prefWidth="354.0" styleClass="tableScroll">
             <content>
                 <TableView fx:id="gameTable" layoutX="75.0" layoutY="125.0" prefHeight="350.0" prefWidth="350.0" styleClass="table">
                     <columns>
@@ -60,17 +60,17 @@
             </content>
         </ScrollPane>
 
-        <Button layoutX="203.0" layoutY="535.0" onAction="#rollDice" prefHeight="85.0" prefWidth="85.0" styleClass="roll">
+        <Button layoutX="202.0" layoutY="565.0" onAction="#rollDice" prefHeight="85.0" prefWidth="85.0" styleClass="roll">
          <graphic>
       
-                    <ImageView fitHeight="70.0" fitWidth="70.0">
+                          <ImageView fitHeight="70.0" fitWidth="70.0">
                   <image>
                       <Image url="@images/dice_gray.png" /> <!-- Specify the path to your image -->
                   </image>
               </ImageView>
          </graphic></Button>
 
-        <Button layoutX="347.0" layoutY="565.0" onAction="#finishTurn" styleClass="basicButton" text="Finish Turn" />
+        <Button layoutX="347.0" layoutY="595.0" onAction="#finishTurn" styleClass="basicButton" text="Finish Turn" />
 
     </children>
 </AnchorPane>

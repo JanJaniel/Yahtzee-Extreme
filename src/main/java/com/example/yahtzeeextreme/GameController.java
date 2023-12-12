@@ -1,9 +1,5 @@
 package com.example.yahtzeeextreme;
 
-import javafx.animation.KeyFrame;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,17 +8,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
-import javafx.util.converter.IntegerStringConverter;
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class GameController {
 
@@ -45,10 +38,10 @@ public class GameController {
     @FXML private TableView<ScoreTableRow> gameTable;
     @FXML private ScrollPane tableScrollPane; // Add the ScrollPane
     @FXML private TableColumn<ScoreTableRow,String> categoryColumn;
-    @FXML private TableColumn<ScoreTableRow,Integer> scoreColumn;
-    @FXML private TableColumn<ScoreTableRow,Integer> score2Column;
-    @FXML private TableColumn<ScoreTableRow,Integer> score3Column;
-    @FXML private TableColumn<ScoreTableRow,Integer> score4Column;
+    @FXML private TableColumn<ScoreTableRow,String> scoreColumn;
+    @FXML private TableColumn<ScoreTableRow,String> score2Column;
+    @FXML private TableColumn<ScoreTableRow,String> score3Column;
+    @FXML private TableColumn<ScoreTableRow,String> score4Column;
 
     public void initialize() {
         List<ScoreTableRow> dataList = new ArrayList<>();
@@ -56,7 +49,7 @@ public class GameController {
         String[] categories = {
                 "ACES", "TWOS", "THREES", "FOURS", "FIVES", "SIXES",
                 "THREE OF A KIND", "FOUR OF A KIND", "FULL HOUSE",
-                "SMALL STRAIGHT", "LARGE STRAIGHT", "YAHTZEE", "CHANCE"
+                "SMALL STRAIGHT", "LARGE STRAIGHT", "YAHTZEE", "CHANCE", "SCORE"
         };
 
         for (String category : categories) {
@@ -75,9 +68,9 @@ public class GameController {
 
         gameTable.setEditable(true); // Set editable to true
 
+        scoreColumn.setCellValueFactory(cellData -> cellData.getValue().getPlayer1ScoreProperty());
+        score2Column.setCellValueFactory(cellData -> cellData.getValue().getPlayer2ScoreProperty());
 
-        scoreColumn.setCellValueFactory(cellData -> cellData.getValue().getPlayer1ScoreProperty().asObject());
-        score2Column.setCellValueFactory(cellData -> cellData.getValue().getPlayer2ScoreProperty().asObject());
 
         gameTable.setRowFactory(tv -> {
             TableRow<ScoreTableRow> row = new TableRow<>();
@@ -88,29 +81,53 @@ public class GameController {
         // Handle the row click to update values
         gameTable.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1 && !gameTable.getSelectionModel().isEmpty()) {
-                ScoreTableRow selectedItem = gameTable.getSelectionModel().getSelectedItem();
-                int newValue = calculateCurrentScore(yahtzeeDices.getDices());
-
-                // Determine which column is selected and update the corresponding score
-                TableColumn<ScoreTableRow, ?> selectedColumn = gameTable.getFocusModel().getFocusedCell().getTableColumn();
-                if (selectedColumn == scoreColumn) {
-                    selectedItem.setPlayer1Score(newValue);
-                } else if (selectedColumn == score2Column) {
-                    selectedItem.setPlayer2Score(newValue);
+                if (turnsLeft < 3){
+                    updateCellValue();
                 }
-
-                gameTable.refresh();
             }
         });
-
-
     }
 
+    private void updateCellValue() {
 
+            ScoreTableRow selectedItem = gameTable.getSelectionModel().getSelectedItem();
+            String newValue = String.valueOf(calculateCurrentScore(yahtzeeDices.getDices()));
 
+            // Determine which column is selected and update the corresponding score
+            TableColumn<ScoreTableRow, ?> selectedColumn = gameTable.getFocusModel().getFocusedCell().getTableColumn();
+            if (selectedColumn == scoreColumn && selectedItem.getPlayer1Score().isEmpty() && currentPlayer == 1) {
+                selectedItem.setPlayer1Score(newValue);
+                updateScoreRow();
+                finishTurn();
+            } else if (selectedColumn == score2Column &&  selectedItem.getPlayer2Score().isEmpty() && currentPlayer == 2) {
+                selectedItem.setPlayer2Score(newValue);
+                updateScoreRow();
+                finishTurn();
+            }
+            gameTable.refresh();
+    }
 
+    private void updateScoreRow() {
+        ScoreTableRow scoreRow = gameTable.getItems().get(gameTable.getItems().size() - 1); // Assuming SCORE row is the last row
+        int player1Sum = calculatePlayerSum(1);
+        int player2Sum = calculatePlayerSum(2);
 
+        scoreRow.setPlayer1Score(String.valueOf(player1Sum));
+        scoreRow.setPlayer2Score(String.valueOf(player2Sum));
+    }
 
+    private int calculatePlayerSum(int player) {
+        int size = gameTable.getItems().size();
+        return gameTable.getItems().stream()
+                .limit(size - 1)  // Exclude the last element
+                .filter(row -> row != null)
+                .mapToInt(row -> player == 1 ? getScoreValue(row.getPlayer1Score()) : getScoreValue(row.getPlayer2Score()))
+                .sum();
+    }
+
+    private int getScoreValue(String score) {
+        return score.isEmpty() ? 0 : Integer.parseInt(score);
+    }
 
     @FXML
     protected void switchToMainMenu(ActionEvent event) throws IOException {
@@ -140,8 +157,6 @@ public class GameController {
             if (!isDice4Toggled) yahtzeeDices.getDices()[3].rollDice();
             if (!isDice5Toggled) yahtzeeDices.getDices()[4].rollDice();
             updateDiceLabels();
-            System.out.println(calculateCurrentScore(yahtzeeDices.getDices()));
-
         }
     }
 
