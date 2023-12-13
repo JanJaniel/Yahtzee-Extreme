@@ -39,14 +39,19 @@ public class CountdownTimer {
     private void handleTimerEvent(ActionEvent event) {
         // Update the label with the current countdown value
         updateCountdownLabel();
+        MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/tick-deepfrozenapps-397275646-2.mp3");
 
         // Decrement the countdown value
         countdownSeconds--;
 
+
         // Check if the countdown has reached zero
         if (countdownSeconds < -1) {
+
             // Stop the countdown when it reaches zero
             stop();
+            GameController.setSuccessfulMove(false);
+            MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/idle2.mp3");
             // Execute the callback function
             onFinishCallback.run();
         }

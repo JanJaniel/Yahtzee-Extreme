@@ -17,6 +17,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+import java.net.URL;
 import java.util.*;
 
 import java.io.IOException;
@@ -32,7 +33,12 @@ public class GameController {
     private Label turnsLeftLabel;
 
     @FXML private Label countdown;
-    private CountdownTimer timer;
+    private CountdownTimer timer = new CountdownTimer(countdown, 5, () -> finishTurn());
+    private static boolean successfulMove = true;
+
+    public static void setSuccessfulMove(boolean successfulMove) {
+        GameController.successfulMove = successfulMove;
+    }
 
     private int currentPlayer = 1;
     private int turnsLeft = 3;
@@ -68,7 +74,7 @@ public class GameController {
         List<ScoreTableRow> dataList = new ArrayList<>();
 
         String[] categories = {
-                "ACES", "TWOS", "THREES", "FOURS", "FIVES", "SIXES",
+                "ACES", "TWOS", "THREES", "FOURS", "FIVES", "SIXES", "BONUS",
                 "THREE OF A KIND", "FOUR OF A KIND", "FULL HOUSE",
                 "SMALL STRAIGHT", "LARGE STRAIGHT", "YAHTZEE", "CHANCE", "SCORE"
         };
@@ -94,8 +100,20 @@ public class GameController {
 
 
         gameTable.setRowFactory(tv -> {
-            TableRow<ScoreTableRow> row = new TableRow<>();
-            row.setEditable(false);
+            TableRow<ScoreTableRow> row = new TableRow<>() {
+                @Override
+                protected void updateItem(ScoreTableRow item, boolean empty) {
+                    super.updateItem(item, empty);
+                    // Remove previous style classes
+                    getStyleClass().remove("special-row");
+
+                    // Apply style to the 7th and the last row
+                    if (!empty && (getIndex() == 6 || getIndex() == gameTable.getItems().size() - 1)) {
+                        getStyleClass().add("special-row");
+                    }
+                }
+            };
+            row.setEditable(false); // Retain existing functionality
             return row;
         });
 
@@ -109,6 +127,19 @@ public class GameController {
         });
     }
 
+    @FXML
+    protected void switchToMainMenu(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main_menu_view.fxml")));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/MainmenuStyles.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+
+
+        MP3Player.playBackgroundMusic("src/main/resources/com/example/yahtzeeextreme/sounds/chip 5 minutes (128kbps).mp3");
+
+    }
     private void updateCellValue() {
 
         ScoreTableRow selectedItem = gameTable.getSelectionModel().getSelectedItem();
@@ -120,7 +151,6 @@ public class GameController {
                 .map(ScoreTableRow::getCategory)
                 .orElse(null);
 
-        System.out.println("Selected Category: " + category);
 
         String newValue = String.valueOf(calculateCurrentScore(yahtzeeDices.getDices(), category));
 
@@ -128,21 +158,25 @@ public class GameController {
 
         if (selectedColumn == scoreColumn && selectedItem.getPlayer1Score().isEmpty() && currentPlayer == 1) {
             selectedItem.setPlayer1Score(newValue);
+
             if(newValue.equals("0")){
-                MP3Player.playMP3("src/main/resources/com/example/yahtzeeextreme/sounds/classic_hurt.mp3");
+                MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/classic_hurt.mp3");
             }else {
-                MP3Player.playMP3("src/main/resources/com/example/yahtzeeextreme/sounds/hitmarker_2.mp3");
+                MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/hitmarker_2.mp3");
             }
             updateScoreRow();
+            successfulMove = true;
             finishTurn();
         } else if (selectedColumn == score2Column && selectedItem.getPlayer2Score().isEmpty() && currentPlayer == 2) {
             selectedItem.setPlayer2Score(newValue);
+
             if(newValue.equals("0")){
-                MP3Player.playMP3("src/main/resources/com/example/yahtzeeextreme/sounds/classic_hurt.mp3");
+                MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/classic_hurt.mp3");
             }else {
-                MP3Player.playMP3("src/main/resources/com/example/yahtzeeextreme/sounds/hitmarker_2.mp3");
+                MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/hitmarker_2.mp3");
             }
             updateScoreRow();
+            successfulMove = true;
             finishTurn();
         }
         gameTable.refresh();
@@ -171,25 +205,18 @@ public class GameController {
     }
 
     @FXML
-    protected void switchToMainMenu(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main_menu_view.fxml")));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/MainmenuStyles.css")).toExternalForm());
-        stage.setScene(scene);
-        stage.show();
-        MP3Player.playMP3("src/main/resources/com/example/yahtzeeextreme/sounds/chip 5 minutes (128kbps).mp3");
-
-    }
-
-    @FXML
     protected void rollDice() {
-         timer = new CountdownTimer(countdown, 5, () -> finishTurn());
-        if (turnsLeft > 0) {
-            if (turnsLeft == 3) {
-                timer.start();
-            }
+        if (turnsLeft == 3) {
 
+            if (successfulMove) {
+                timer = new CountdownTimer(countdown, 5, () -> finishTurn());
+            } else {
+                timer = new CountdownTimer(countdown, 10, () -> finishTurn());
+            }
+            timer.start();
+        }
+
+        if (turnsLeft > 0) {
             turnsLeft--;
             turnsLeftLabel.setText("Rolls left: " + turnsLeft);
 
@@ -206,18 +233,92 @@ public class GameController {
             if (!isDice5Toggled) yahtzeeDices.getDices()[4].rollDice();
             updateDiceLabels();
 
-            MP3Player.playMP3("src/main/resources/com/example/yahtzeeextreme/sounds/dice-142528.mp3");
+            MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/dice-142528.mp3");
 
         }
+
+    }
+
+    // resets the dices for next player
+    @FXML
+    private void finishTurn() {
+        System.out.println("finishTurn: "+successfulMove);
+        clearDiceValuesAndStyles();
+        if (areAllCellsFilled()) {
+            String winner = determineWinner(); // Method to determine the winner
+            showAlert("Game Over", winner);
+        }
+        switchPlayers();
+
+        timer.stop();
 
     }
 
 
 
 
-    // resets the dices for next player
-    @FXML
-    private void finishTurn() {
+    private void showAlert(String title, String content) {
+        try {
+            MP3Player.stopBackgroundMusic();
+            timer.stop();
+            MP3Player.playBackgroundMusic("src/main/resources/com/example/yahtzeeextreme/sounds/Wii Shop Channel Theme (Trap Remix) (128kbps).mp3");
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(title);
+            alert.setHeaderText(null);
+            alert.setContentText(content);
+
+            // Style the dialog pane directly
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.setStyle("-fx-background-color: #2c3e50; -fx-font-size: 16px; -fx-font-family: 'Arial';");
+
+            // Style the buttons
+            for (Node node : dialogPane.lookupAll(".button")) {
+                ((Button) node).setStyle("-fx-background-color: #343A40; -fx-text-fill: white;");
+            }
+
+            alert.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace(); // Print the error details
+        }
+    }
+
+
+
+    private String determineWinner() {
+        ScoreTableRow scoreRow = gameTable.getItems().get(gameTable.getItems().size() - 1); // Assuming SCORE row is the last row
+        int player1Sum = calculatePlayerSum(1);
+        int player2Sum = calculatePlayerSum(2);
+
+        if (player1Sum > player2Sum) {
+            return "Player 1 wins!";
+        } else if (player2Sum > player1Sum) {
+            return "Player 2 wins!";
+        } else {
+            return "It's a tie!";
+        }
+    }
+
+
+    private boolean areAllCellsFilled() {
+        for (ScoreTableRow row : gameTable.getItems()) {
+            // Check if either player's score is an empty string
+            if (row.getPlayer1Score().isEmpty() || row.getPlayer2Score().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
+    public void clearDiceValuesAndStyles(){
+        System.out.println("clearvaluesandstyles: "+successfulMove);
+        if(successfulMove){
+            countdown.setText("5");
+        }else {
+            countdown.setText("10");
+        }
         turnsLeft = 3;
         turnsLeftLabel.setText("Turns left: " + turnsLeft);
 
@@ -233,6 +334,9 @@ public class GameController {
         dice4Button.setStyle("");
         dice5Button.setStyle("");
 
+    }
+
+    public void switchPlayers(){
         if (currentPlayer == 2) {
             currentPlayer = 1;
             playerTurn.setText("Player: " + currentPlayer);
@@ -240,9 +344,6 @@ public class GameController {
             currentPlayer++;
             playerTurn.setText("Player: " + currentPlayer);
         }
-
-        countdown.setText("5");
-        timer.stop();
     }
 
     private void updateDiceLabels() {
@@ -288,7 +389,7 @@ public class GameController {
     //when clicked/selected the dice will turn green to help the user understand
     // which dices will not change when clicking roll dices button
     private void toggleButtonState(Button button) {
-        MP3Player.playMP3("src/main/resources/com/example/yahtzeeextreme/sounds/minecraft---menu-click-2-made-with-Voicemod-technology.mp3");
+        MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/minecraft---menu-click-2-made-with-Voicemod-technology.mp3");
         if (isButtonToggled(button)) {
             button.setStyle(""); // Set to default style (remove inline styles)
         } else {

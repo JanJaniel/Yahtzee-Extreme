@@ -26,7 +26,7 @@ public class YahtzeeApplication extends Application {
             stage.setTitle("Yahtzee Extreme");
             stage.setScene(mainMenuScene);
             stage.show();
-            MP3Player.playMP3("src/main/resources/com/example/yahtzeeextreme/sounds/chip 5 minutes (128kbps).mp3");
+            MP3Player.playBackgroundMusic("src/main/resources/com/example/yahtzeeextreme/sounds/chip 5 minutes (128kbps).mp3");
 
         }catch (Exception e){
             e.printStackTrace();
