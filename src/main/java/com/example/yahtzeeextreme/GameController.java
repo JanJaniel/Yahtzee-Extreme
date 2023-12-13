@@ -9,14 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.File;
+
+import java.net.URISyntaxException;
 import java.io.IOException;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 import java.util.*;
@@ -32,6 +30,9 @@ public class GameController {
     private Label playerTurn;
     @FXML
     private Label turnsLeftLabel;
+
+    @FXML private Label countdown;
+    private CountdownTimer timer;
 
     private int currentPlayer = 1;
     private int turnsLeft = 3;
@@ -127,10 +128,20 @@ public class GameController {
 
         if (selectedColumn == scoreColumn && selectedItem.getPlayer1Score().isEmpty() && currentPlayer == 1) {
             selectedItem.setPlayer1Score(newValue);
+            if(newValue.equals("0")){
+                MP3Player.playMP3("src/main/resources/com/example/yahtzeeextreme/sounds/classic_hurt.mp3");
+            }else {
+                MP3Player.playMP3("src/main/resources/com/example/yahtzeeextreme/sounds/hitmarker_2.mp3");
+            }
             updateScoreRow();
             finishTurn();
         } else if (selectedColumn == score2Column && selectedItem.getPlayer2Score().isEmpty() && currentPlayer == 2) {
             selectedItem.setPlayer2Score(newValue);
+            if(newValue.equals("0")){
+                MP3Player.playMP3("src/main/resources/com/example/yahtzeeextreme/sounds/classic_hurt.mp3");
+            }else {
+                MP3Player.playMP3("src/main/resources/com/example/yahtzeeextreme/sounds/hitmarker_2.mp3");
+            }
             updateScoreRow();
             finishTurn();
         }
@@ -167,12 +178,18 @@ public class GameController {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/MainmenuStyles.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
+        MP3Player.playMP3("src/main/resources/com/example/yahtzeeextreme/sounds/chip 5 minutes (128kbps).mp3");
+
     }
 
     @FXML
     protected void rollDice() {
-
+         timer = new CountdownTimer(countdown, 5, () -> finishTurn());
         if (turnsLeft > 0) {
+            if (turnsLeft == 3) {
+                timer.start();
+            }
+
             turnsLeft--;
             turnsLeftLabel.setText("Rolls left: " + turnsLeft);
 
@@ -188,22 +205,15 @@ public class GameController {
             if (!isDice4Toggled) yahtzeeDices.getDices()[3].rollDice();
             if (!isDice5Toggled) yahtzeeDices.getDices()[4].rollDice();
             updateDiceLabels();
-            playMP3("C:\\Users\\User\\Desktop\\Yahtzee-Extreme\\src\\main\\resources\\com\\example\\yahtzeeextreme\\sounds\\dice-142528.mp3");
+
+            MP3Player.playMP3("src/main/resources/com/example/yahtzeeextreme/sounds/dice-142528.mp3");
 
         }
+
     }
 
-    private void playMP3(String filePath) {
-        try {
-            File soundFile = new File(filePath);
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioIn);
-            clip.start();
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
-        }
-    }
+
+
 
     // resets the dices for next player
     @FXML
@@ -230,6 +240,9 @@ public class GameController {
             currentPlayer++;
             playerTurn.setText("Player: " + currentPlayer);
         }
+
+        countdown.setText("5");
+        timer.stop();
     }
 
     private void updateDiceLabels() {
@@ -275,6 +288,7 @@ public class GameController {
     //when clicked/selected the dice will turn green to help the user understand
     // which dices will not change when clicking roll dices button
     private void toggleButtonState(Button button) {
+        MP3Player.playMP3("src/main/resources/com/example/yahtzeeextreme/sounds/minecraft---menu-click-2-made-with-Voicemod-technology.mp3");
         if (isButtonToggled(button)) {
             button.setStyle(""); // Set to default style (remove inline styles)
         } else {
@@ -475,6 +489,5 @@ public class GameController {
 
         return false;
     }
-
 }
 

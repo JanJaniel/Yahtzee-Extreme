@@ -100,3 +100,14 @@
     -fx-text-alignment: center;
 }
 
+.timer{
+    -fx-font-size: 21;
+    -fx-text-fill: #ff0000;
+    -fx-background-color: #495057;
+    -fx-border-color: rgb(12, 12, 12);
+    -fx-pref-width: 40px;
+    -fx-alignment:center;
+    -fx-font-weight: bold;
+
+}
+

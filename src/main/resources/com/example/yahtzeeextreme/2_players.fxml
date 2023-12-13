@@ -12,18 +12,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="667.0" prefWidth="600.0" styleClass="gamePane" stylesheets="@styles/GameStyles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.GameController">
-
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
+<AnchorPane depthTest="ENABLE" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" styleClass="gamePane" stylesheets="@styles/GameStyles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.GameController">
 
     <children>
 
-        <Label fx:id="turnsLeftLabel" layoutX="151.0" layoutY="14.0" styleClass="turns-left" text="Rolls left: 3" />
-        <Label fx:id="playerTurn" styleClass="playerTurn" text=" Player: 1" />
+        <Label fx:id="turnsLeftLabel" layoutX="152.0" layoutY="15.0" styleClass="turns-left" text="Rolls left: 3" />
+        <Label fx:id="playerTurn" layoutX="8.0" layoutY="4.0" styleClass="playerTurn" text=" Player: 1" />
 
-        <HBox layoutX="104.0" layoutY="77.0" prefHeight="51.0" prefWidth="295.0" spacing="10.0" styleClass="dice-hbox">
+        <HBox layoutX="105.0" layoutY="74.0" prefHeight="51.0" prefWidth="295.0" spacing="10.0" styleClass="dice-hbox">
             <Button fx:id="dice1Button" onAction="#toggleDice1Button" prefHeight="51.0" prefWidth="51.0" styleClass="button-in-hbox" text="">
             <font>
                <Font size="24.0" />
@@ -46,9 +42,9 @@
             </font></Button>
         </HBox>
 
-        <Button layoutX="73.0" layoutY="595.0" mnemonicParsing="false" onAction="#switchToMainMenu" styleClass="basicButton" text="End Game" />
+        <Button layoutX="73.0" layoutY="569.0" mnemonicParsing="false" onAction="#switchToMainMenu" styleClass="basicButton" text="End Game" />
 
-        <ScrollPane fx:id="tableScrollPane" fitToHeight="true" fitToWidth="true" layoutX="73.0" layoutY="153.0" prefHeight="378.0" prefWidth="354.0" styleClass="tableScroll">
+        <ScrollPane fx:id="tableScrollPane" fitToHeight="true" fitToWidth="true" layoutX="75.0" layoutY="152.0" prefHeight="378.0" prefWidth="354.0" styleClass="tableScroll">
             <content>
                 <TableView fx:id="gameTable" layoutX="75.0" layoutY="125.0" prefHeight="350.0" prefWidth="350.0" styleClass="table">
                     <columns>
@@ -60,17 +56,21 @@
             </content>
         </ScrollPane>
 
-        <Button layoutX="202.0" layoutY="565.0" onAction="#rollDice" prefHeight="85.0" prefWidth="85.0" styleClass="roll">
+        <Button layoutX="204.0" layoutY="539.0" onAction="#rollDice" prefHeight="85.0" prefWidth="85.0" styleClass="roll">
          <graphic>
       
-                          <ImageView fitHeight="70.0" fitWidth="70.0">
+                                <ImageView fitHeight="70.0" fitWidth="70.0">
                   <image>
                       <Image url="@images/dice_gray.png" /> <!-- Specify the path to your image -->
                   </image>
               </ImageView>
          </graphic></Button>
 
-        <Button layoutX="347.0" layoutY="595.0" onAction="#finishTurn" styleClass="basicButton" text="Finish Turn" />
+        <Button layoutX="351.0" layoutY="569.0" onAction="#finishTurn" styleClass="basicButton" text="Finish Turn" />
+      <Label fx:id="countdown" layoutX="452.0" layoutY="4.0" styleClass="timer" text="5" />
 
     </children>
+   <padding>
+      <Insets bottom="20.0" />
+   </padding>
 </AnchorPane>
