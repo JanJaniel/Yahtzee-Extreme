@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane depthTest="ENABLE" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" styleClass="gamePane" stylesheets="@styles/GameStyles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.GameController">
+<AnchorPane depthTest="ENABLE" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" styleClass="gamePane" stylesheets="@../styles/GameStyles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yahtzeeextreme.GameController">
 
     <children>
 
@@ -61,7 +61,7 @@
       
                                       <ImageView fitHeight="70.0" fitWidth="70.0">
                   <image>
-                      <Image url="@images/dice_gray.png" /> <!-- Specify the path to your image -->
+                      <Image url="@../images/dice_gray.png" /> <!-- Specify the path to your image -->
                   </image>
               </ImageView>
          </graphic></Button>

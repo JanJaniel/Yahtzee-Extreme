@@ -9,17 +9,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 import java.net.URISyntaxException;
 import java.io.IOException;
-
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
 import java.io.File;
 import java.net.URL;
 import java.util.*;
-
 import java.io.IOException;
 import java.util.stream.Collectors;
 
@@ -27,48 +23,41 @@ public class GameController {
 
     private Stage stage;
     private YahtzeeDices yahtzeeDices = new YahtzeeDices();
-    @FXML
-    private Label playerTurn;
-    @FXML
-    private Label turnsLeftLabel;
-
+    @FXML private Label playerTurn;
+    @FXML private Label turnsLeftLabel;
     @FXML private Label countdown;
-    private CountdownTimer timer = new CountdownTimer(countdown, 5, () -> finishTurn());
+    private CountdownTimer timer = new CountdownTimer(countdown, 5, () -> {
+        try {
+            finishTurn();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    });
     private static boolean successfulMove = true;
+    private static boolean punishmentNeeded = false;
 
+    public static void setPunishmentNeeded(boolean punishmentNeeded) {
+        GameController.punishmentNeeded = punishmentNeeded;
+    }
     public static void setSuccessfulMove(boolean successfulMove) {
         GameController.successfulMove = successfulMove;
     }
-
-    private int currentPlayer = 1;
+    private static int currentPlayer = 1;
     private int turnsLeft = 3;
 
-    @FXML
-    private Button dice1Button;
-    @FXML
-    private Button dice2Button;
-    @FXML
-    private Button dice3Button;
-    @FXML
-    private Button dice4Button;
-    @FXML
-    private Button dice5Button;
+    @FXML private Button dice1Button;
+    @FXML private Button dice2Button;
+    @FXML private Button dice3Button;
+    @FXML private Button dice4Button;
+    @FXML private Button dice5Button;
+    @FXML private TableView<ScoreTableRow> gameTable;
+    @FXML private ScrollPane tableScrollPane;
+    @FXML private TableColumn<ScoreTableRow, String> categoryColumn;
+    @FXML private TableColumn<ScoreTableRow, String> scoreColumn;
+    @FXML private TableColumn<ScoreTableRow, String> score2Column;
+    @FXML private TableColumn<ScoreTableRow, String> score3Column;
+    @FXML private TableColumn<ScoreTableRow, String> score4Column;
 
-
-    @FXML
-    private TableView<ScoreTableRow> gameTable;
-    @FXML
-    private ScrollPane tableScrollPane; // Add the ScrollPane
-    @FXML
-    private TableColumn<ScoreTableRow, String> categoryColumn;
-    @FXML
-    private TableColumn<ScoreTableRow, String> scoreColumn;
-    @FXML
-    private TableColumn<ScoreTableRow, String> score2Column;
-    @FXML
-    private TableColumn<ScoreTableRow, String> score3Column;
-    @FXML
-    private TableColumn<ScoreTableRow, String> score4Column;
 
     public void initialize() {
         List<ScoreTableRow> dataList = new ArrayList<>();
@@ -85,20 +74,21 @@ public class GameController {
         }
 
         gameTable.getItems().addAll(dataList);
-
         gameTable.setFixedCellSize(25);
+        gameTable.setEditable(true);
 
         tableScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         tableScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
-        gameTable.setEditable(true); // Set editable to true
-
         scoreColumn.setCellValueFactory(cellData -> cellData.getValue().getPlayer1ScoreProperty());
+
+
         score2Column.setCellValueFactory(cellData -> cellData.getValue().getPlayer2ScoreProperty());
 
 
+        // coloring Bonus and Score row
         gameTable.setRowFactory(tv -> {
             TableRow<ScoreTableRow> row = new TableRow<>() {
                 @Override
@@ -121,7 +111,11 @@ public class GameController {
         gameTable.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1 && !gameTable.getSelectionModel().isEmpty()) {
                 if (turnsLeft < 3) {
-                    updateCellValue();
+                    try {
+                        updateCellValue();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
@@ -129,33 +123,63 @@ public class GameController {
 
     @FXML
     protected void switchToMainMenu(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main_menu_view.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxmlFiles/main_menu_view.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/MainmenuStyles.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
 
-
+        successfulMove = true;
         MP3Player.playBackgroundMusic("src/main/resources/com/example/yahtzeeextreme/sounds/chip 5 minutes (128kbps).mp3");
-
     }
-    private void updateCellValue() {
+
+
+
+
+    @FXML
+    protected void switchToGameOver(String winner) throws IOException {
+        MP3Player.stopBackgroundMusic();
+        timer.stop();
+        MP3Player.playBackgroundMusic("src/main/resources/com/example/yahtzeeextreme/sounds/Wii Shop Channel Theme (Trap Remix) (128kbps).mp3");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxmlFiles/GameOver.fxml"));
+        Parent root = loader.load();
+
+        GameOverController gameOverController = loader.getController();
+        gameOverController.setWinner(winner);
+
+        Stage stage = (Stage) gameTable.getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("styles/GameOver.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+
+
+
+
+    private void updateCellValue() throws IOException {
 
         ScoreTableRow selectedItem = gameTable.getSelectionModel().getSelectedItem();
         TableColumn<ScoreTableRow, ?> selectedColumn = gameTable.getFocusModel().getFocusedCell().getTableColumn();
 
+        // Find the selected item category
         String category = gameTable.getItems().stream()
-                .filter(item -> item.equals(selectedItem)) // Find the selected item
+                .filter(item -> item.equals(selectedItem))
                 .findFirst()
                 .map(ScoreTableRow::getCategory)
                 .orElse(null);
 
+        if (category.equals("BONUS")) {
+            return;
+        }
 
         String newValue = String.valueOf(calculateCurrentScore(yahtzeeDices.getDices(), category));
 
-        // Determine which column is selected and update the corresponding score
-
+        // Determining which column is selected and updating the corresponding score
         if (selectedColumn == scoreColumn && selectedItem.getPlayer1Score().isEmpty() && currentPlayer == 1) {
             selectedItem.setPlayer1Score(newValue);
 
@@ -164,6 +188,7 @@ public class GameController {
             }else {
                 MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/hitmarker_2.mp3");
             }
+            updateBonusPoints();
             updateScoreRow();
             successfulMove = true;
             finishTurn();
@@ -175,15 +200,49 @@ public class GameController {
             }else {
                 MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/hitmarker_2.mp3");
             }
+            updateBonusPoints();
             updateScoreRow();
+
             successfulMove = true;
             finishTurn();
         }
+
         gameTable.refresh();
     }
 
+
+    private void checkIfPunishment() {
+        System.out.println("Checking for punishment: " + punishmentNeeded + ", Current Player: " + currentPlayer);
+
+        if (currentPlayer == 1 && punishmentNeeded) {
+            System.out.println("Applying punishment to Player 1");
+            subtractScoreRow(10, 1);
+            punishmentNeeded = false;
+        } else if (currentPlayer == 2 && punishmentNeeded) {
+            System.out.println("Applying punishment to Player 2");
+            subtractScoreRow(10, 2);
+            punishmentNeeded = false;
+        }
+    }
+
+
+    private void subtractScoreRow(int points, int player) {
+        ScoreTableRow scoreRow = gameTable.getItems().get(gameTable.getItems().size() - 1);
+        int currentScore = player == 1 ? getScoreValue(scoreRow.getPlayer1Score()) : getScoreValue(scoreRow.getPlayer2Score());
+        int newScore = currentScore - points;
+        if (player == 1) {
+            scoreRow.setPlayer1Score(String.valueOf(newScore));
+        } else {
+            scoreRow.setPlayer2Score(String.valueOf(newScore));
+        }
+
+        // Refresh the TableView to reflect the change
+        gameTable.refresh();
+    }
+
+
     private void updateScoreRow() {
-        ScoreTableRow scoreRow = gameTable.getItems().get(gameTable.getItems().size() - 1); // Assuming SCORE row is the last row
+        ScoreTableRow scoreRow = gameTable.getItems().get(gameTable.getItems().size() - 1); //  SCORE row is the last row
         int player1Sum = calculatePlayerSum(1);
         int player2Sum = calculatePlayerSum(2);
 
@@ -194,7 +253,7 @@ public class GameController {
     private int calculatePlayerSum(int player) {
         int size = gameTable.getItems().size();
         return gameTable.getItems().stream()
-                .limit(size - 1)  // Exclude the last element
+                .limit(size - 1)
                 .filter(row -> row != null)
                 .mapToInt(row -> player == 1 ? getScoreValue(row.getPlayer1Score()) : getScoreValue(row.getPlayer2Score()))
                 .sum();
@@ -204,14 +263,59 @@ public class GameController {
         return score.isEmpty() ? 0 : Integer.parseInt(score);
     }
 
+    private void updateBonusPoints() {
+        // Calculate and update bonus for player 1
+        updateBonusForPlayer(1);
+
+        // Calculate and update bonus for player 2
+        updateBonusForPlayer(2);
+    }
+
+    private void updateBonusForPlayer(int playerNumber) {
+        int totalPoints = 0;
+        for (int i = 0; i < 6; i++) { // Iterate over the first six rows
+            ScoreTableRow row = gameTable.getItems().get(i);
+            String playerScoreStr = (playerNumber == 1) ? row.getPlayer1Score() : row.getPlayer2Score();
+            int playerScore = getScoreValue(playerScoreStr);
+            totalPoints += playerScore;
+        }
+        ScoreTableRow bonusRow = gameTable.getItems().get(6); // 7th row for BONUS
+        if (totalPoints >= 63) {
+
+            if (playerNumber == 1) {
+                bonusRow.setPlayer1Score("35"); // Set 35 points for BONUS for Player 1
+            } else {
+                bonusRow.setPlayer2Score("35"); // Set 35 points for BONUS for Player 2
+            }
+        }else{
+            if (playerNumber == 1) {
+                bonusRow.setPlayer1Score("0"); // Set 35 points for BONUS for Player 1
+            } else {
+                bonusRow.setPlayer2Score("0"); // Set 35 points for BONUS for Player 2
+            }
+        }
+    }
+
+
     @FXML
     protected void rollDice() {
         if (turnsLeft == 3) {
-
             if (successfulMove) {
-                timer = new CountdownTimer(countdown, 5, () -> finishTurn());
+                timer = new CountdownTimer(countdown, 5, () -> {
+                    try {
+                        finishTurn();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
             } else {
-                timer = new CountdownTimer(countdown, 10, () -> finishTurn());
+                timer = new CountdownTimer(countdown, 10, () -> {
+                    try {
+                        finishTurn();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
             }
             timer.start();
         }
@@ -219,7 +323,6 @@ public class GameController {
         if (turnsLeft > 0) {
             turnsLeft--;
             turnsLeftLabel.setText("Rolls left: " + turnsLeft);
-
             // Get the current state of each button
             boolean isDice1Toggled = isButtonToggled(dice1Button);
             boolean isDice2Toggled = isButtonToggled(dice2Button);
@@ -232,55 +335,22 @@ public class GameController {
             if (!isDice4Toggled) yahtzeeDices.getDices()[3].rollDice();
             if (!isDice5Toggled) yahtzeeDices.getDices()[4].rollDice();
             updateDiceLabels();
-
             MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/dice-142528.mp3");
-
         }
-
     }
 
     // resets the dices for next player
     @FXML
-    private void finishTurn() {
-        System.out.println("finishTurn: "+successfulMove);
+    private void finishTurn() throws IOException {
+        System.out.println(punishmentNeeded);
+        checkIfPunishment();
         clearDiceValuesAndStyles();
         if (areAllCellsFilled()) {
-            String winner = determineWinner(); // Method to determine the winner
-            showAlert("Game Over", winner);
+            String winner = determineWinner();
+            switchToGameOver(winner);
         }
         switchPlayers();
-
         timer.stop();
-
-    }
-
-
-
-
-    private void showAlert(String title, String content) {
-        try {
-            MP3Player.stopBackgroundMusic();
-            timer.stop();
-            MP3Player.playBackgroundMusic("src/main/resources/com/example/yahtzeeextreme/sounds/Wii Shop Channel Theme (Trap Remix) (128kbps).mp3");
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle(title);
-            alert.setHeaderText(null);
-            alert.setContentText(content);
-
-            // Style the dialog pane directly
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.setStyle("-fx-background-color: #2c3e50; -fx-font-size: 16px; -fx-font-family: 'Arial';");
-
-            // Style the buttons
-            for (Node node : dialogPane.lookupAll(".button")) {
-                ((Button) node).setStyle("-fx-background-color: #343A40; -fx-text-fill: white;");
-            }
-
-            alert.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace(); // Print the error details
-        }
     }
 
 
@@ -299,7 +369,6 @@ public class GameController {
         }
     }
 
-
     private boolean areAllCellsFilled() {
         for (ScoreTableRow row : gameTable.getItems()) {
             // Check if either player's score is an empty string
@@ -310,10 +379,7 @@ public class GameController {
         return true;
     }
 
-
-
     public void clearDiceValuesAndStyles(){
-        System.out.println("clearvaluesandstyles: "+successfulMove);
         if(successfulMove){
             countdown.setText("5");
         }else {
@@ -321,19 +387,16 @@ public class GameController {
         }
         turnsLeft = 3;
         turnsLeftLabel.setText("Turns left: " + turnsLeft);
-
         dice1Button.setText("");
         dice2Button.setText("");
         dice3Button.setText("");
         dice4Button.setText("");
         dice5Button.setText("");
-
         dice1Button.setStyle("");
         dice2Button.setStyle("");
         dice3Button.setStyle("");
         dice4Button.setStyle("");
         dice5Button.setStyle("");
-
     }
 
     public void switchPlayers(){
@@ -475,10 +538,10 @@ public class GameController {
             break;
             case "YAHTZEE":
                 if(areAllNumbersSame(diceValues)){
+                    MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/mlg-airhorn-quieter_qUq62P0.mp3");
                     score = 50;
                 }
             break;
-
             case"CHANCE":
                 for (Dice num : diceValues) {
                     score += num.getValue();
@@ -488,11 +551,9 @@ public class GameController {
         return score;
     }
 
-
     private static boolean isThreeOfAKind(Dice[] numbers){
-
+        // Using a HashMap to count the occurrences of each number
         Map<Integer, Integer> countMapThree = new HashMap<>();
-
         for (Dice d : numbers) {
             countMapThree.put(d.getValue(), countMapThree.getOrDefault(d.getValue(), 0) + 1);
         }
@@ -506,13 +567,11 @@ public class GameController {
     }
 
     private static boolean isFourOfAKind(Dice[] numbers){
-
+        // Using a HashMap to count the occurrences of each number
         Map<Integer, Integer> countMapThree = new HashMap<>();
-
         for (Dice d : numbers) {
             countMapThree.put(d.getValue(), countMapThree.getOrDefault(d.getValue(), 0) + 1);
         }
-
         // Checking if any number occurs at least three times
         for (int count : countMapThree.values()) {
             if (count >= 4) {
@@ -523,7 +582,7 @@ public class GameController {
     }
 
     private static boolean isFullHouse(Dice[] numbers) {
-        // Use a HashMap to count the occurrences of each number
+        // Using a HashMap to count the occurrences of each number
         Map<Integer, Integer> countMap = new HashMap<>();
         // Count occurrences
         for (Dice num : numbers) {
@@ -532,7 +591,6 @@ public class GameController {
         // Check for a full house
         boolean hasThreeOfAKind = false;
         boolean hasPair = false;
-
         for (int count : countMap.values()) {
             if (count == 3) {
                 hasThreeOfAKind = true;
@@ -540,16 +598,13 @@ public class GameController {
                 hasPair = true;
             }
         }
-
         return hasThreeOfAKind && hasPair;
     }
 
     private static boolean areAllNumbersSame(Dice[] diceValues) {
         int firstNumber = diceValues[0].getValue();
-
         for (int i = 0; i < 5; i++) {
             if (diceValues[i].getValue() != firstNumber) {
-
                 return false;
             }
         }
@@ -557,9 +612,7 @@ public class GameController {
     }
 
     public static boolean hasSmallStraight(Dice[] numbers) {
-
         Arrays.sort(numbers, Comparator.comparingInt(Dice::getValue));
-
         // Check for a small straight
         for (int i = 0; i < numbers.length - 3; i++) {
             if (numbers[i + 1].getValue() - numbers[i].getValue() <= 1 &&
@@ -569,15 +622,11 @@ public class GameController {
             }
         }
         return false;
-
-
     }
-
 
     public static boolean hasLargeStraight(Dice[] numbers) {
         // Sort the array based on the dice values
         Arrays.sort(numbers, Comparator.comparingInt(Dice::getValue));
-
         // Check for each possible large straight
         for (int i = 0; i < numbers.length - 4; i++) {
             if (numbers[i].getValue() + 1 == numbers[i + 1].getValue() &&
@@ -587,7 +636,6 @@ public class GameController {
                 return true;
             }
         }
-
         return false;
     }
 }

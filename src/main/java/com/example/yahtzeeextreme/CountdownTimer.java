@@ -52,6 +52,7 @@ public class CountdownTimer {
             stop();
             GameController.setSuccessfulMove(false);
             MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/idle2.mp3");
+            GameController.setPunishmentNeeded(true);
             // Execute the callback function
             onFinishCallback.run();
         }

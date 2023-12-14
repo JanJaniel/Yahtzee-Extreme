@@ -20,7 +20,7 @@ public class MenuController {
 
 
     @FXML protected void switchTo2Player(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("2_players.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("fxmlFiles/2_players.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
 
@@ -34,7 +34,7 @@ public class MenuController {
     }
 
     @FXML protected void switchTo3Player(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("3_players.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("fxmlFiles/3_players.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/GameStyles.css")).toExternalForm());
@@ -43,7 +43,7 @@ public class MenuController {
     }
 
     @FXML protected void switchTo4Player(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("4_players.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("fxmlFiles/4_players.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/GameStyles.css")).toExternalForm());
@@ -52,7 +52,7 @@ public class MenuController {
     }
 
     @FXML protected void switchToBotPlayer(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("bot_player.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("fxmlFiles/bot_player.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/GameStyles.css")).toExternalForm());

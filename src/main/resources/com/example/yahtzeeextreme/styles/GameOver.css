@@ -1,0 +1,38 @@
+.endPane {
+    -fx-background-color: #6C757D;
+    -fx-pref-width: 500px;
+    -fx-pref-height: 400px;
+}
+
+.gameover {
+    -fx-pref-width: 300px;
+    -fx-background-color: #CED4DA;
+    -fx-text-fill: #212529;
+    -fx-font-size: 30px;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 11, 0, 2, 2);
+}
+
+
+.winner{
+    -fx-font-size: 30px;
+    -fx-text-fill: #ffffff;
+}
+
+.play{
+    -fx-text-fill: #ADB5BD;
+    -fx-font-size: 14px;
+    -fx-background-color: #343A40;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 10, 0, 4, 4);
+
+}
+
+.play:hover{
+    -fx-background-color: #495057;
+    -fx-text-fill: #ADB5BD;
+    fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 5, 0, 4, 4);
+}
+
