@@ -34,11 +34,7 @@ public class GameController {
         }
     });
     private static boolean successfulMove = true;
-    private static boolean punishmentNeeded = false;
 
-    public static void setPunishmentNeeded(boolean punishmentNeeded) {
-        GameController.punishmentNeeded = punishmentNeeded;
-    }
     public static void setSuccessfulMove(boolean successfulMove) {
         GameController.successfulMove = successfulMove;
     }
@@ -83,9 +79,9 @@ public class GameController {
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
         scoreColumn.setCellValueFactory(cellData -> cellData.getValue().getPlayer1ScoreProperty());
-
-
         score2Column.setCellValueFactory(cellData -> cellData.getValue().getPlayer2ScoreProperty());
+        addOptionalPlayerColumns();
+
 
 
         // coloring Bonus and Score row
@@ -121,6 +117,18 @@ public class GameController {
         });
     }
 
+    private void addOptionalPlayerColumns() {
+        // Check if the additional player columns are defined in FXML
+        if (score3Column != null) {
+            // Initialize the column for the 3rd player
+            score3Column.setCellValueFactory(cellData -> cellData.getValue().getPlayer3ScoreProperty());
+        }
+
+        if (score4Column != null) {
+            // Initialize the column for the 4th player
+            score4Column.setCellValueFactory(cellData -> cellData.getValue().getPlayer4ScoreProperty());
+        }
+    }
     @FXML
     protected void switchToMainMenu(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxmlFiles/main_menu_view.fxml")));
@@ -129,20 +137,17 @@ public class GameController {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/MainmenuStyles.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
-
+        timer.stop();
         successfulMove = true;
         MP3Player.playBackgroundMusic("src/main/resources/com/example/yahtzeeextreme/sounds/chip 5 minutes (128kbps).mp3");
     }
-
-
-
 
     @FXML
     protected void switchToGameOver(String winner) throws IOException {
         MP3Player.stopBackgroundMusic();
         timer.stop();
         MP3Player.playBackgroundMusic("src/main/resources/com/example/yahtzeeextreme/sounds/Wii Shop Channel Theme (Trap Remix) (128kbps).mp3");
-
+        successfulMove = true;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("fxmlFiles/GameOver.fxml"));
         Parent root = loader.load();
 
@@ -155,11 +160,6 @@ public class GameController {
         stage.setScene(scene);
         stage.show();
     }
-
-
-
-
-
 
     private void updateCellValue() throws IOException {
 
@@ -209,37 +209,6 @@ public class GameController {
 
         gameTable.refresh();
     }
-
-
-    private void checkIfPunishment() {
-        System.out.println("Checking for punishment: " + punishmentNeeded + ", Current Player: " + currentPlayer);
-
-        if (currentPlayer == 1 && punishmentNeeded) {
-            System.out.println("Applying punishment to Player 1");
-            subtractScoreRow(10, 1);
-            punishmentNeeded = false;
-        } else if (currentPlayer == 2 && punishmentNeeded) {
-            System.out.println("Applying punishment to Player 2");
-            subtractScoreRow(10, 2);
-            punishmentNeeded = false;
-        }
-    }
-
-
-    private void subtractScoreRow(int points, int player) {
-        ScoreTableRow scoreRow = gameTable.getItems().get(gameTable.getItems().size() - 1);
-        int currentScore = player == 1 ? getScoreValue(scoreRow.getPlayer1Score()) : getScoreValue(scoreRow.getPlayer2Score());
-        int newScore = currentScore - points;
-        if (player == 1) {
-            scoreRow.setPlayer1Score(String.valueOf(newScore));
-        } else {
-            scoreRow.setPlayer2Score(String.valueOf(newScore));
-        }
-
-        // Refresh the TableView to reflect the change
-        gameTable.refresh();
-    }
-
 
     private void updateScoreRow() {
         ScoreTableRow scoreRow = gameTable.getItems().get(gameTable.getItems().size() - 1); //  SCORE row is the last row
@@ -296,7 +265,6 @@ public class GameController {
         }
     }
 
-
     @FXML
     protected void rollDice() {
         if (turnsLeft == 3) {
@@ -342,18 +310,14 @@ public class GameController {
     // resets the dices for next player
     @FXML
     private void finishTurn() throws IOException {
-        System.out.println(punishmentNeeded);
-        checkIfPunishment();
         clearDiceValuesAndStyles();
-        if (areAllCellsFilled()) {
+        if ( isGameReadyToConclude()) {
             String winner = determineWinner();
             switchToGameOver(winner);
         }
         switchPlayers();
         timer.stop();
     }
-
-
 
     private String determineWinner() {
         ScoreTableRow scoreRow = gameTable.getItems().get(gameTable.getItems().size() - 1); // Assuming SCORE row is the last row
@@ -369,15 +333,29 @@ public class GameController {
         }
     }
 
-    private boolean areAllCellsFilled() {
+    private boolean isGameReadyToConclude() {
+        boolean scoreColumnCompletelyFilled = true;
+        boolean score2ColumnCompletelyFilled = true;
+        int emptyCellsInScore2Column = 0;
+
         for (ScoreTableRow row : gameTable.getItems()) {
-            // Check if either player's score is an empty string
-            if (row.getPlayer1Score().isEmpty() || row.getPlayer2Score().isEmpty()) {
-                return false;
+            // Check if scoreColumn has any empty cell
+            if (row.getPlayer1Score().isEmpty()) {
+                scoreColumnCompletelyFilled = false;
+            }
+            // Check if score2Column has any empty cell and count them
+            if (row.getPlayer2Score().isEmpty()) {
+                score2ColumnCompletelyFilled = false;
+                emptyCellsInScore2Column++;
             }
         }
-        return true;
+
+        // Game is ready to conclude if score2Column is completely filled
+        // OR if scoreColumn is completely filled and score2Column has more than one empty cell
+        return score2ColumnCompletelyFilled || (scoreColumnCompletelyFilled && emptyCellsInScore2Column > 1);
     }
+
+
 
     public void clearDiceValuesAndStyles(){
         if(successfulMove){
@@ -419,28 +397,23 @@ public class GameController {
         dice5Button.setText(String.valueOf(dices[4].getValue()));
     }
 
-    @FXML
-    protected void toggleDice1Button() {
+    @FXML protected void toggleDice1Button() {
         toggleButtonState(dice1Button);
     }
 
-    @FXML
-    protected void toggleDice2Button() {
+    @FXML protected void toggleDice2Button() {
         toggleButtonState(dice2Button);
     }
 
-    @FXML
-    protected void toggleDice3Button() {
+    @FXML protected void toggleDice3Button() {
         toggleButtonState(dice3Button);
     }
 
-    @FXML
-    protected void toggleDice4Button() {
+    @FXML protected void toggleDice4Button() {
         toggleButtonState(dice4Button);
     }
 
-    @FXML
-    protected void toggleDice5Button() {
+    @FXML protected void toggleDice5Button() {
         toggleButtonState(dice5Button);
     }
 

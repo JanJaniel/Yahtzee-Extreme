@@ -5,22 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="911e3cff-2344-42e8-9e02-a1900593d226" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/GameOverController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/GameOver.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/images/ahmeteroll.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/sounds/mlg-airhorn-quieter_qUq62P0.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles/GameOver.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/CountdownTimer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/CountdownTimer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/MenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/YahtzeeApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/YahtzeeApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/2_players.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/2_players.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/3_players.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/3_players.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/4_players.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/4_players.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/bot_player.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/bot_player.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/main_menu_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/main_menu_view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/styles/alertStyles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/ScoreTableRow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/yahtzeeextreme/ScoreTableRow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/2_players.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/2_players.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/3_players.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/3_players.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/4_players.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/4_players.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/GameOver.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/GameOver.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/bot_player.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/main_menu_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/yahtzeeextreme/fxmlFiles/main_menu_view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +121,7 @@
       <workItem from="1702388864940" duration="26025000" />
       <workItem from="1702465236872" duration="1149000" />
       <workItem from="1702466431193" duration="24750000" />
-      <workItem from="1702552145064" duration="16040000" />
+      <workItem from="1702552145064" duration="23529000" />
     </task>
     <task id="LOCAL-00001" summary="basic start">
       <created>1697709270627</created>
@@ -311,7 +306,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702507940409</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="determining winner">
+      <created>1702572385424</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1702572385425</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

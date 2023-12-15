@@ -50,13 +50,4 @@ public class MenuController {
         stage.setScene(scene);
         stage.show();
     }
-
-    @FXML protected void switchToBotPlayer(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("fxmlFiles/bot_player.fxml"));
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/GameStyles.css")).toExternalForm());
-        stage.setScene(scene);
-        stage.show();
-    }
 }

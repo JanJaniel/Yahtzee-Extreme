@@ -10,10 +10,10 @@
     <children>
 
       <Label layoutX="100.0" layoutY="23.0" styleClass="gameover" text="Game Over " />
-      <Label fx:id="winner" layoutX="128.0" layoutY="85.0" prefHeight="58.0" prefWidth="336.0" styleClass="winner" text="Winner is Player 1!" />
+      <Label fx:id="winner" layoutX="160.0" layoutY="85.0" prefHeight="58.0" prefWidth="181.0" styleClass="winner" text="Player 1 wins!" />
       <Button layoutX="27.0" layoutY="347.0" mnemonicParsing="false" onAction="#switchToMainMenu" styleClass="play" text=" Main Menu" />
 
-        <ImageView fitHeight="140.0" fitWidth="140.0" layoutX="180.0" layoutY="181.0">
+        <ImageView fitHeight="140.0" fitWidth="140.0" layoutX="180.0" layoutY="175.0">
             <image>
                 <Image url="@../images/ahmeteroll.gif" />
             </image>

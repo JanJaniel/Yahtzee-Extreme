@@ -2,11 +2,14 @@ package com.example.yahtzeeextreme;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 
 public class ScoreTableRow {
     private String category;
     private StringProperty player1Score = new SimpleStringProperty();
     private StringProperty player2Score = new SimpleStringProperty();
+    private StringProperty player3Score = new SimpleStringProperty();
+    private StringProperty player4Score = new SimpleStringProperty();
 
     public ScoreTableRow(String category) {
         this.category = category;
@@ -41,4 +44,8 @@ public class ScoreTableRow {
     public void setPlayer2Score(String score) {
         player2Score.set(score);
     }
+
+    public ObservableValue<String> getPlayer3ScoreProperty() {return player3Score;}
+
+    public ObservableValue<String> getPlayer4ScoreProperty() { return player4Score;}
 }
