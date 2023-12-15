@@ -6,7 +6,7 @@ This game was inspired by a fun evening with friends playing the traditional Yah
 
 ## Game Overview
 
-Extreme Yahtzee follows the standard Yahtzee rules, where players roll dice to make certain combinations and score points. However, this version introduces an element of speed.
+Extreme Yahtzee follows the standard Yahtzee rules, where players roll dices to make certain combinations and score points. However, this version introduces an element of speed.
 
 
 ## Key Features
