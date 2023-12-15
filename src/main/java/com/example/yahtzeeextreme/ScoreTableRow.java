@@ -4,6 +4,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 
+import java.util.Collection;
+
 public class ScoreTableRow {
     private String category;
     private StringProperty player1Score = new SimpleStringProperty();
@@ -15,6 +17,8 @@ public class ScoreTableRow {
         this.category = category;
         this.player1Score.set("");
         this.player2Score.set("");
+        this.player3Score.set("");
+        this.player4Score.set("");
     }
 
     public String getCategory() {
@@ -45,7 +49,28 @@ public class ScoreTableRow {
         player2Score.set(score);
     }
 
-    public ObservableValue<String> getPlayer3ScoreProperty() {return player3Score;}
+    public String getPlayer3Score() {
+        return player3Score.get();
+    }
 
-    public ObservableValue<String> getPlayer4ScoreProperty() { return player4Score;}
+    public void setPlayer3Score(String score) {
+        player3Score.set(score);
+    }
+
+    public StringProperty getPlayer3ScoreProperty() {
+        return player3Score;
+    }
+
+    public String getPlayer4Score() {
+        return player4Score.get();
+    }
+
+    public void setPlayer4Score(String score) {
+        player4Score.set(score);
+    }
+
+    public StringProperty getPlayer4ScoreProperty() {
+        return player4Score;
+    }
+
 }

@@ -9,18 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import java.net.URISyntaxException;
 import java.io.IOException;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import java.io.File;
-import java.net.URL;
 import java.util.*;
-import java.io.IOException;
-import java.util.stream.Collectors;
 
 public class GameController {
-
     private Stage stage;
     private YahtzeeDices yahtzeeDices = new YahtzeeDices();
     @FXML private Label playerTurn;
@@ -34,11 +26,8 @@ public class GameController {
         }
     });
     private static boolean successfulMove = true;
-
-    public static void setSuccessfulMove(boolean successfulMove) {
-        GameController.successfulMove = successfulMove;
-    }
     private static int currentPlayer = 1;
+    private static int totalPlayers = 2;
     private int turnsLeft = 3;
 
     @FXML private Button dice1Button;
@@ -54,6 +43,12 @@ public class GameController {
     @FXML private TableColumn<ScoreTableRow, String> score3Column;
     @FXML private TableColumn<ScoreTableRow, String> score4Column;
 
+    public static void setSuccessfulMove(boolean successfulMove) {
+        GameController.successfulMove = successfulMove;
+    }
+    public void setTotalPlayers(int numberOfPlayers) {
+        this.totalPlayers = numberOfPlayers;
+    }
 
     public void initialize() {
         List<ScoreTableRow> dataList = new ArrayList<>();
@@ -72,17 +67,12 @@ public class GameController {
         gameTable.getItems().addAll(dataList);
         gameTable.setFixedCellSize(25);
         gameTable.setEditable(true);
-
         tableScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         tableScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
-
         scoreColumn.setCellValueFactory(cellData -> cellData.getValue().getPlayer1ScoreProperty());
         score2Column.setCellValueFactory(cellData -> cellData.getValue().getPlayer2ScoreProperty());
         addOptionalPlayerColumns();
-
-
 
         // coloring Bonus and Score row
         gameTable.setRowFactory(tv -> {
@@ -118,15 +108,17 @@ public class GameController {
     }
 
     private void addOptionalPlayerColumns() {
-        // Check if the additional player columns are defined in FXML
+
         if (score3Column != null) {
-            // Initialize the column for the 3rd player
+            //   3rd player
             score3Column.setCellValueFactory(cellData -> cellData.getValue().getPlayer3ScoreProperty());
+            totalPlayers = 3;
         }
 
         if (score4Column != null) {
-            // Initialize the column for the 4th player
+            //  4th player
             score4Column.setCellValueFactory(cellData -> cellData.getValue().getPlayer4ScoreProperty());
+            totalPlayers = 4;
         }
     }
     @FXML
@@ -139,6 +131,8 @@ public class GameController {
         stage.show();
         timer.stop();
         successfulMove = true;
+        totalPlayers = 2; //back to default value
+        currentPlayer = 1; //back to default
         MP3Player.playBackgroundMusic("src/main/resources/com/example/yahtzeeextreme/sounds/chip 5 minutes (128kbps).mp3");
     }
 
@@ -162,70 +156,100 @@ public class GameController {
     }
 
     private void updateCellValue() throws IOException {
+        ScoreTableRow clicked_on = gameTable.getSelectionModel().getSelectedItem();
+        TableColumn<ScoreTableRow,?> clickedColumn = gameTable.getFocusModel().getFocusedCell().getTableColumn();
 
-        ScoreTableRow selectedItem = gameTable.getSelectionModel().getSelectedItem();
-        TableColumn<ScoreTableRow, ?> selectedColumn = gameTable.getFocusModel().getFocusedCell().getTableColumn();
-
-        // Find the selected item category
         String category = gameTable.getItems().stream()
-                .filter(item -> item.equals(selectedItem))
+                .filter(item -> item.equals(clicked_on))
                 .findFirst()
                 .map(ScoreTableRow::getCategory)
                 .orElse(null);
 
-        if (category.equals("BONUS")) {
+        if (category == null || category.equals("BONUS") || category.equals("SCORE")) {
+            return; // dont allow clicks an BONUS and SCORE
+        }
+
+        String points = String.valueOf(calculateCurrentScore( yahtzeeDices.getDices(), category ));
+
+        //  update  column if empty
+        if (currentPlayer == 1 && clickedColumn == scoreColumn && clicked_on.getPlayer1Score().isEmpty()) {
+            clicked_on.setPlayer1Score( points) ;
+        } else if (currentPlayer == 2 && clickedColumn == score2Column && clicked_on.getPlayer2Score().isEmpty()) {
+            clicked_on.setPlayer2Score( points) ;
+        } else if (currentPlayer == 3 && score3Column != null && clickedColumn == score3Column && clicked_on.getPlayer3Score().isEmpty()) {
+            clicked_on.setPlayer3Score( points );
+        } else if (currentPlayer == 4 && score4Column != null && clickedColumn == score4Column && clicked_on.getPlayer4Score().isEmpty()) {
+            clicked_on.setPlayer4Score( points );
+        } else {
             return;
         }
 
-        String newValue = String.valueOf(calculateCurrentScore(yahtzeeDices.getDices(), category));
-
-        // Determining which column is selected and updating the corresponding score
-        if (selectedColumn == scoreColumn && selectedItem.getPlayer1Score().isEmpty() && currentPlayer == 1) {
-            selectedItem.setPlayer1Score(newValue);
-
-            if(newValue.equals("0")){
-                MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/classic_hurt.mp3");
-            }else {
-                MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/hitmarker_2.mp3");
-            }
-            updateBonusPoints();
-            updateScoreRow();
-            successfulMove = true;
-            finishTurn();
-        } else if (selectedColumn == score2Column && selectedItem.getPlayer2Score().isEmpty() && currentPlayer == 2) {
-            selectedItem.setPlayer2Score(newValue);
-
-            if(newValue.equals("0")){
-                MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/classic_hurt.mp3");
-            }else {
-                MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/hitmarker_2.mp3");
-            }
-            updateBonusPoints();
-            updateScoreRow();
-
-            successfulMove = true;
-            finishTurn();
-        }
-
+        playAppropriateSound(points);
+        updateBonusPoints();
+        updateScoreRow();
+        successfulMove = true;
+        finishTurn();
         gameTable.refresh();
     }
 
+
+    private void playAppropriateSound(String newValue) {
+        if (newValue.equals("0")) {
+            MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/classic_hurt.mp3");
+        } else {
+            MP3Player.playSound("src/main/resources/com/example/yahtzeeextreme/sounds/hitmarker_2.mp3");
+        }
+    }
+
+
     private void updateScoreRow() {
-        ScoreTableRow scoreRow = gameTable.getItems().get(gameTable.getItems().size() - 1); //  SCORE row is the last row
+        ScoreTableRow scoreRow = gameTable.getItems().get( gameTable.getItems().size() - 1 ); // SCORE row is the last row
+
+        // Calculate sums for each player
         int player1Sum = calculatePlayerSum(1);
         int player2Sum = calculatePlayerSum(2);
+        int player3Sum = score3Column != null ? calculatePlayerSum(3) : 0; //if player 3 mode
+        int player4Sum = score4Column != null ? calculatePlayerSum(4) : 0; // if player 4 mode
 
-        scoreRow.setPlayer1Score(String.valueOf(player1Sum));
-        scoreRow.setPlayer2Score(String.valueOf(player2Sum));
+        // Update the SCORE row with the calculated sums
+        scoreRow.setPlayer1Score(String.valueOf( player1Sum ));
+        scoreRow.setPlayer2Score(String.valueOf( player2Sum ));
+
+        if (score3Column != null) {
+            scoreRow.setPlayer3Score(String.valueOf( player3Sum ));
+        }
+
+        if (score4Column != null) {
+            scoreRow.setPlayer4Score(String.valueOf( player4Sum ));
+        }
     }
 
     private int calculatePlayerSum(int player) {
+        int sum = 0;
         int size = gameTable.getItems().size();
-        return gameTable.getItems().stream()
-                .limit(size - 1)
-                .filter(row -> row != null)
-                .mapToInt(row -> player == 1 ? getScoreValue(row.getPlayer1Score()) : getScoreValue(row.getPlayer2Score()))
-                .sum();
+
+        for (ScoreTableRow row : gameTable.getItems().subList(0, size - 1)) {
+            String score;
+            switch (player) {
+                case 1:
+                    score = row.getPlayer1Score();
+                    break;
+                case 2:
+                    score = row.getPlayer2Score();
+                    break;
+                case 3:
+                    score = row.getPlayer3Score();
+                    break;
+                case 4:
+                    score = row.getPlayer4Score();
+                    break;
+                default:
+                    score = "";
+            }
+            sum += getScoreValue(score);
+        }
+
+        return sum;
     }
 
     private int getScoreValue(String score) {
@@ -233,34 +257,69 @@ public class GameController {
     }
 
     private void updateBonusPoints() {
-        // Calculate and update bonus for player 1
+        // Calculate and update bonus for all players
         updateBonusForPlayer(1);
-
-        // Calculate and update bonus for player 2
         updateBonusForPlayer(2);
+        if (score3Column != null) {
+            updateBonusForPlayer(3);
+        }
+        if (score4Column != null) {
+            updateBonusForPlayer(4);
+        }
     }
 
     private void updateBonusForPlayer(int playerNumber) {
         int totalPoints = 0;
         for (int i = 0; i < 6; i++) { // Iterate over the first six rows
             ScoreTableRow row = gameTable.getItems().get(i);
-            String playerScoreStr = (playerNumber == 1) ? row.getPlayer1Score() : row.getPlayer2Score();
-            int playerScore = getScoreValue(playerScoreStr);
-            totalPoints += playerScore;
-        }
-        ScoreTableRow bonusRow = gameTable.getItems().get(6); // 7th row for BONUS
-        if (totalPoints >= 63) {
-
-            if (playerNumber == 1) {
-                bonusRow.setPlayer1Score("35"); // Set 35 points for BONUS for Player 1
-            } else {
-                bonusRow.setPlayer2Score("35"); // Set 35 points for BONUS for Player 2
+            String playerScoreStr = "";
+            switch (playerNumber) {
+                case 1:
+                    playerScoreStr = row.getPlayer1Score();
+                    break;
+                case 2:
+                    playerScoreStr = row.getPlayer2Score();
+                    break;
+                case 3:
+                    playerScoreStr = row.getPlayer3Score();
+                    break;
+                case 4:
+                    playerScoreStr = row.getPlayer4Score();
+                    break;
             }
-        }else{
-            if (playerNumber == 1) {
-                bonusRow.setPlayer1Score("0"); // Set 35 points for BONUS for Player 1
-            } else {
-                bonusRow.setPlayer2Score("0"); // Set 35 points for BONUS for Player 2
+            totalPoints += getScoreValue(playerScoreStr);
+        }
+
+        ScoreTableRow bonusRow = gameTable.getItems().get(6); // this is the Bonus row. It should be updated with 35 or 0 on these conditions
+        if (totalPoints >= 63) {
+            switch (playerNumber) {
+                case 1:
+                    bonusRow.setPlayer1Score("35");
+                    break;
+                case 2:
+                    bonusRow.setPlayer2Score("35");
+                    break;
+                case 3:
+                    bonusRow.setPlayer3Score("35");
+                    break;
+                case 4:
+                    bonusRow.setPlayer4Score("35");
+                    break;
+            }
+        } else {
+            switch (playerNumber) {
+                case 1:
+                    bonusRow.setPlayer1Score("0");
+                    break;
+                case 2:
+                    bonusRow.setPlayer2Score("0");
+                    break;
+                case 3:
+                    bonusRow.setPlayer3Score("0");
+                    break;
+                case 4:
+                    bonusRow.setPlayer4Score("0");
+                    break;
             }
         }
     }
@@ -333,27 +392,53 @@ public class GameController {
         }
     }
 
-    private boolean isGameReadyToConclude() {
+    private boolean isGameReadyToConclude() { // if a player doesnt manages to play a turn the logic for game over had to be adjusted
         boolean scoreColumnCompletelyFilled = true;
         boolean score2ColumnCompletelyFilled = true;
+        boolean score3ColumnCompletelyFilled = score3Column != null;
+        boolean score4ColumnCompletelyFilled = score4Column != null;
         int emptyCellsInScore2Column = 0;
+        int emptyCellsInScore3Column = 0;
+        int emptyCellsInScore4Column = 0;
 
         for (ScoreTableRow row : gameTable.getItems()) {
-            // Check if scoreColumn has any empty cell
+            // Check if any column has any empty cell and count them
             if (row.getPlayer1Score().isEmpty()) {
                 scoreColumnCompletelyFilled = false;
             }
-            // Check if score2Column has any empty cell and count them
             if (row.getPlayer2Score().isEmpty()) {
                 score2ColumnCompletelyFilled = false;
                 emptyCellsInScore2Column++;
             }
+            if (score3Column != null && row.getPlayer3Score().isEmpty()) {
+                score3ColumnCompletelyFilled = false;
+                emptyCellsInScore3Column++;
+            }
+            if (score4Column != null && row.getPlayer4Score().isEmpty()) {
+                score4ColumnCompletelyFilled = false;
+                emptyCellsInScore4Column++;
+            }
         }
 
-        // Game is ready to conclude if score2Column is completely filled
-        // OR if scoreColumn is completely filled and score2Column has more than one empty cell
+        // Logic for 4-player mode
+        if (totalPlayers == 4) {
+            return (scoreColumnCompletelyFilled && emptyCellsInScore2Column > 1 && emptyCellsInScore3Column > 1 && emptyCellsInScore4Column > 1) ||
+                    (score2ColumnCompletelyFilled && emptyCellsInScore3Column > 2 && emptyCellsInScore4Column > 2) ||
+                    (score3ColumnCompletelyFilled && emptyCellsInScore4Column > 2) ||
+                    score4ColumnCompletelyFilled;
+        }
+
+        // Logic for 3-player mode
+        else if (totalPlayers == 3) {
+            return score3ColumnCompletelyFilled ||
+                    (scoreColumnCompletelyFilled && emptyCellsInScore2Column > 1 && emptyCellsInScore3Column > 1) ||
+                    (score2ColumnCompletelyFilled && emptyCellsInScore3Column > 1);
+        }
+
+        // Default 2-player logic
         return score2ColumnCompletelyFilled || (scoreColumnCompletelyFilled && emptyCellsInScore2Column > 1);
     }
+
 
 
 
@@ -377,14 +462,10 @@ public class GameController {
         dice5Button.setStyle("");
     }
 
-    public void switchPlayers(){
-        if (currentPlayer == 2) {
-            currentPlayer = 1;
-            playerTurn.setText("Player: " + currentPlayer);
-        } else {
-            currentPlayer++;
-            playerTurn.setText("Player: " + currentPlayer);
-        }
+    public void switchPlayers() {
+        // Increment the currentPlayer and wrap around if it exceeds totalPlayers
+        currentPlayer = (currentPlayer % totalPlayers) + 1;
+        playerTurn.setText("Player: " + currentPlayer);
     }
 
     private void updateDiceLabels() {
@@ -591,7 +672,7 @@ public class GameController {
             if (numbers[i + 1].getValue() - numbers[i].getValue() <= 1 &&
                     numbers[i + 2].getValue() - numbers[i + 1].getValue() <= 1 &&
                     numbers[i + 3].getValue() - numbers[i + 2].getValue() <= 1) {
-                return true; // If there are four consecutive numbers, it's a small straight
+                return true;
             }
         }
         return false;

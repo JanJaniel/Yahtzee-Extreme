@@ -40,6 +40,8 @@ public class MenuController {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/GameStyles.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
+        MP3Player.playBackgroundMusic("src/main/resources/com/example/yahtzeeextreme/sounds/pet the peepo 1 hours (128kbps).mp3");
+        MP3Player.setVolume(0.5);
     }
 
     @FXML protected void switchTo4Player(ActionEvent event) throws IOException {
@@ -49,5 +51,7 @@ public class MenuController {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles/GameStyles.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
+        MP3Player.playBackgroundMusic("src/main/resources/com/example/yahtzeeextreme/sounds/pet the peepo 1 hours (128kbps).mp3");
+        MP3Player.setVolume(0.5);
     }
 }
