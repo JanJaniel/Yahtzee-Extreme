@@ -1,7 +1,4 @@
 
-# README for Extreme Yahtzee Java Game
-
-
 ## Introduction
 
 This game was inspired by a fun evening with friends playing the traditional Yahtzee game. The goal was to recreate the classic game in Java while more "extreme" and fast-paced.
