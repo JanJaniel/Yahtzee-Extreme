@@ -12,4 +12,5 @@ Extreme Yahtzee follows the standard Yahtzee rules, where players roll dice to m
 ## Key Features
 
 Time-Limited Moves: Each player has only 5 seconds to complete their move. 
+
 Penalty for Delay: If a player fails to make a move within the 5-second window, their turn is skipped, and the next player gets an extended 10-second window for their move.
